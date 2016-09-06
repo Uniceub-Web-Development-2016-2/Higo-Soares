@@ -1,0 +1,963 @@
+swagger: '2.0'
+
+################################################################################
+#                                        Api Info                              #
+################################################################################
+info:
+  version: "1.0.0"
+  title: Diet API
+  description : Web application that involves people with interests in hypertrophy , weight loss , nutritional education, healthier style . Users can know of their mass indices mascular , lean mass, fat also seek a new diet , watch your calorie information of food , prices, where to buy.
+  
+################################################################################
+#                  Host, Base Path, Schemes and Content Types                  #
+################################################################################
+host: localhost
+
+schemes:
+  - https
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json  
+  
+################################################################################
+#                                        Parameters                            #
+################################################################################
+parameters:
+  user-id:
+    name: user-id
+    in: path
+    description: The user id
+    required : true
+    type : number
+    format : integer
+    
+  diet-id:  
+    name: diet-id
+    in: path
+    description: The diet id.
+    required: true
+    type: number
+    format: integer
+    
+  food-id:
+    name: food-id
+    in: path
+    description: The food id.
+    required: true
+    type: number
+    format: integer
+    
+  objective-id:
+    name: objective-id
+    in: path
+    description: The objective id.
+    required: true
+    type: number
+    format: integer
+    
+  email-id:
+    name: email-id
+    in: path
+    description: The e-mail id.
+    required: true
+    type: number
+    format: integer
+
+################################################################################
+#                                           Paths                              #
+################################################################################
+paths:
+
+  /user:
+    get:
+      tags:
+      - User
+      description: |
+        Get informations about all users.
+      parameters:
+         -
+          name: username
+          in: query
+          description: The user name.
+          required: false
+          type: string
+
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/User'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+    post:
+      tags:
+      - User
+      description: |
+        Create a new user.
+      parameters:
+        -
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: User created
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/User'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+  /user/{user-id}:
+    get:
+      tags:
+      - User
+      description: |
+        Get informations about a user especific.
+      parameters:
+        -
+          name: user-id
+          in: path
+          description: The user identificador.
+          required: true
+          type: number
+          format: integer
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/User'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+    put:
+      tags:
+      - User
+      description: |
+        Change informations about a user especific.
+      parameters:
+        - $ref: '#/parameters/user-id'
+        -
+          in: body
+          name: informations-user
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/User'
+        
+
+        406:
+          description: Not Acceptable
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+  /user/{user-id}/diet:
+    get:
+      tags:
+      - User
+      - Diet
+      description: |
+        Get informations about a diet from the user.
+      parameters:
+        - $ref: '#/parameters/user-id'
+        -
+          name: diet-id
+          in: query
+          description: The diet from user.
+          required: false
+          type: number
+          format: integer
+  
+        -  
+          name: objective
+          in: query
+          description: Objective from the diet.
+          required: false
+          type: number
+          format: integer
+      
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Diet'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+
+  /diet/{diet-id}/food:
+    get:
+      tags:
+      - Diet
+      - Food
+      description: |
+        Get informations about the foods from the diet.
+      parameters:
+        - $ref: '#/parameters/diet-id'
+          
+        -
+          name: food-name
+          in: query
+          description: The food name
+          required: false
+          type : string
+
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Diet'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+  /diet:
+    get:
+      tags:
+      - Diet
+      description: |
+        Get informations about all diets.
+      parameters:
+        -
+          name: diet-id
+          in: query
+          description: The diet id.
+          required: false
+          type: number
+          format: integer
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Food'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+    post:
+      tags:
+      - Diet
+      description: |
+        Create a new diet.
+      parameters:
+        -
+          in: body
+          name: diet
+          required: true
+          schema:
+            $ref: '#/definitions/Diet'
+      responses:
+        200:
+          description: Diet created
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Diet'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+  /diet/{diet-id}:
+    get:
+      tags:
+      - Diet
+      description: |
+        Get informations about the diet especific.
+    
+      parameters:
+        - $ref: '#/parameters/diet-id'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Diet'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+    put:
+      tags:
+      - Diet
+      description: |
+        Change informations about a diet especific.
+      parameters:
+        - $ref: '#/parameters/diet-id'
+        -
+          in: body
+          name: informations-diet
+          required: true
+          schema:
+            $ref: '#/definitions/Diet'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Diet'
+
+        406:
+          description: Not Acceptable
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+  /food:
+    get:
+      tags:
+      - Food
+      description: |
+        Get informations about all food.
+      parameters:
+        -
+          name: food-id
+          in: query
+          description: The food id.
+          required: false
+          type: number
+          format: integer
+        -
+          name: name
+          in: query
+          description: Name of food.
+          required: false
+          type: number
+          format: integer
+      
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Food'
+                
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+    post:
+      tags:
+      - Food
+      description: |
+        Create a new food.
+      parameters:
+        -
+          in: body
+          name: food
+          required: true
+          schema:
+            $ref: '#/definitions/Food'
+      responses:
+        200:
+          description: Food created
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Food'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+                
+  /food/{food-id}:
+    get:
+      tags:
+      - Food
+      description: |
+        Get informations about the diet especific.
+      parameters:
+        - $ref: '#/parameters/food-id'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Food'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+    put:
+      tags:
+      - Food
+      description: |
+        Change informations about a food especific.
+      parameters:
+        - $ref: '#/parameters/food-id'
+        -
+          in: body
+          name: informations-food
+          required: true
+          schema:
+            $ref: '#/definitions/Food'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Food'
+
+        406:
+          description: Not Acceptable
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+  /food/{food-id}/objective:
+    get:
+      tags:
+      - Food
+      - Objective
+      description: |
+        Get objective about the food.
+      parameters:
+        - $ref: '#/parameters/food-id'
+
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Food'
+                
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+  /objective:
+    get:
+      tags:
+      - Objective
+      description: |
+        Get informations about all objective.
+      parameters:
+
+        -
+          name: name
+          in: query
+          description: Name of objective.
+          required: false
+          type: string
+
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Objective'
+                
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+    post:
+      tags:
+      - Objective
+      description: |
+        Create a new objective.
+      parameters:
+        -
+          in: body
+          name: objective
+          required: true
+          schema:
+            $ref: '#/definitions/Objective'
+      responses:
+        200:
+          description: Objective created
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/User'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+  /objective/{objective-id}:
+    get:
+      tags:
+      - Objective
+      description: |
+        Get informations about the object especific.
+      parameters:
+        - $ref: '#/parameters/objective-id'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Objective'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+    put:
+      tags:
+      - Objective
+      description: |
+        Change informations about a objective especific.
+      parameters:
+        - $ref: '#/parameters/objective-id'
+        -
+          in: body
+          name: informations-objective
+          required: true
+          schema:
+            $ref: '#/definitions/Objective'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Food'
+
+        406:
+          description: Not Acceptable
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+  /location/{location-id}:
+    get:
+      tags:
+      - Location
+      description: |
+        Get informations about a location.
+      parameters:
+      -
+        name: location-id
+        description: Location id
+        in: path
+        type: integer
+        required: true
+
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Location'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+  /locations/search:
+    get:
+      tags:
+        - Location
+      description: Search for a location by maps coordinate.
+      parameters:
+        - name: distance
+          in: query
+          description: Default is 1000m (distance=1000), max distance is 5000.
+          type: integer
+
+        - name: latitude
+          in: query
+          description: |
+            Latitude of the center search coordinate.
+          type: number
+
+        - name: longitude
+          in: query
+          description: |
+            Longitude of the center search coordinate.
+          type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Location'
+
+                
+  /users/e-mail:
+    post:
+      tags:
+      - User
+      - E-mail
+      description: |
+        Create a e-mail for support application:
+        * The total length of the e-mail cannot exceed 300 characters.
+      parameters:
+        - name: TEXT
+          description: |
+            Text to post a e-mail.
+            
+          in: body
+          schema:
+            type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/E-mail'
+                
+  /user/{email-id}/e-mail:              
+    put:
+      tags:
+      - User
+      - E-mail
+      description: |
+        Change informations in the message for e-mail support.
+      parameters:
+        - $ref: '#/parameters/email-id'
+        -
+          in: body
+          name: informations-email
+          required: true
+          schema:
+            $ref: '#/definitions/E-mail'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/E-mail'
+
+        406:
+          description: Not Acceptable
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+  
+################################################################################
+#                                     definitions                              #
+################################################################################  
+    
+definitions:
+  User:
+    type: object
+    required:
+    - name
+    - password
+    - cpf
+    - e-mail
+    - weight
+    - height
+    - age
+    properties:
+      id:
+        type : integer
+      name:
+        type: string
+      surname:
+        type: string
+      password:
+        type : string
+      cpf:
+        type: integer
+      e-mail:
+        type: string
+      weight : 
+        type : number
+        format : double
+      height : 
+        type : number
+        format : double
+      age:
+        type : integer
+      diet:
+        type: object
+        properties:
+          count:
+            type: integer
+          diets:
+            type: array
+            items:
+              $ref: '#/definitions/Diet'
+  Diet:
+    type: object
+    required:
+    - ideal weight
+    - objective
+    properties:
+      id:
+        type: integer
+        format: int32
+      ideal weight:
+        type: string
+      date init:
+        type: number
+        format: date
+      date final:
+        type : number
+        format : date
+      objective:
+        type: object
+        properties:
+            
+            items:
+              $ref: '#/definitions/Objective'
+      foods:
+        type: object
+        properties:
+          count:
+            type: integer
+          items:
+            type: array
+            items:
+              $ref: '#/definitions/Food'
+              
+  Location:
+    type: object
+    required:
+    - name local
+    - latitude
+    - longitude
+    properties:
+      id:
+        type: string
+      name local:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+        
+  Food:
+    type : object
+    required:
+    - name
+    - calories
+    - weight
+    - location
+    properties:
+      id: 
+        type: string
+      name : 
+        type : string
+      calories:
+        type : number
+        format : double
+      weight:
+        type : number
+        format : double
+      location:
+        type: object
+        properties:
+           local:
+            type: array
+            items:
+              $ref: '#/definitions/Location'
+              
+  Objective:
+    type : object
+    required:
+    - name
+    properties:
+      id : 
+        type : string
+      name : 
+        type : string
+        
+  E-mail :
+    type : object
+    required:
+    - sender
+    - recipient
+    - body
+    properties :
+      id:
+        type : string
+      sender:
+        type : string
+      recipient:
+        type : string
+      subject:
+        type : string
+      copy:
+        type : string
+      body: 
+        type : string
+      attachment:
+        type: object
+        properties:
+            
+            items:
+              $ref: '#/definitions/Attachment'
+        
+  Attachment:
+    type : object
+    properties:
+      images:
+        properties:
+          low_resolution:
+            $ref: '#/definitions/Image'
+          thumbnail:
+            $ref: '#/definitions/Image'
+          standard_resolution:
+            $ref: '#/definitions/Image'
+        
+  Image:
+    type: object
+    properties:
+      width:
+        type: integer
+      height:
+        type: integer
+      url:
+        type: string
+        
+  ErrorModel:
+    type : object
+    required:
+    - code
+    - message
+    properties:
+      code:
+        type : string
+      message : 
+        type : string
+      
+    
+        
+  

@@ -1,4 +1,5 @@
 <?php
+//include('request.php');
 
 
 class RequestController
@@ -18,27 +19,37 @@ class RequestController
 
 		if(!self::is_valid_protocol($request_info['SERVER_PROTOCOL']))
 		{
-			return array("code" => "404", "message" => "protocol not valid");
+			return array("code" => "505", "message" => "protocol does not support");
 			
 		}
-		
+
+	
 		if(!self::is_valid_remote_addr($request_info['REMOTE_ADDR']))
 		{
-			return array("code" => "404", "message" => "remote ip not valid");
+			return array("code" => "404", "message" => "Remote ip not found");
 			
 		}
 
-		
-		
+		if(!self::is_valid_resource($request_info['REQUEST_URI']))
+		{
+			return array("code" => "406", "message" => "Not Acceptable");
+			
+		}
+
+		if(!self::is_valid_query_string($request_info['QUERY_STRING']))
+		{
+			return array("code" => "404", "message" => "Query not found");
+			
+		}
 
 
-	//	$request_info['SERVER_ADDR'];
+
+
+
 	//	$request_info['REQUEST_ADDR'];
-	//	$request_info['REQUEST_URI'];
-	//	$request_info['QUERY_STRING'];
 	//	file_get_contents('php://input');
 		
-	//	return new Request();
+	//	return new Request("GET", "http", "localhost", "172.22.51.128", "aula4", array("par1"=>123,"par2"=>1234));
 		
 	}
 	
@@ -59,7 +70,6 @@ class RequestController
 		return true;
 	}
 
-
 	public function is_valid_remote_addr($remoteip)
 	{
 	if(!filter_var($remoteip, FILTER_VALIDATE_IP))
@@ -68,18 +78,25 @@ class RequestController
 			return true;
 	}
 
+	
+		public function is_valid_resource($requesturi)
+	{
+	if(is_null($requesturi) || !is_dir($requesturi))
+				return false;
+		
+			return true;
+	}
+
+		public function is_valid_query_string($querystring)
+	{
+	if(is_null($querystring) || !empty($_REQUEST['param']))
+				return false;
+		
+			return true;
+	}
+	
 
 
-
-
-
-
-
-
-
-
-
-
-
+	
 
 }

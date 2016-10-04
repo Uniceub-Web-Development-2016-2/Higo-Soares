@@ -206,10 +206,95 @@ paths:
           type: number
           format: integer
   
+        
+      
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Diet'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+  /user/{user-id}/diet/objective:
+    get:
+      tags:
+      - User
+      - Diet
+      description: |
+        Get informations about a objective from diet the user.
+      parameters:
+        - $ref: '#/parameters/user-id'
+        -
+          name: diet-id
+          in: query
+          description: The diet from user.
+          required: false
+          type: number
+          format: integer
+  
         -  
           name: objective
           in: query
           description: Objective from the diet.
+          required: false
+          type: number
+          format: integer
+      
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Diet'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+  /user/{user-id}/diet/food/location:
+    get:
+      tags:
+      - User
+      - Diet
+      description: |
+        Get informations about a food location from diet the user.
+      parameters:
+        - $ref: '#/parameters/user-id'
+        -
+          name: diet-id
+          in: query
+          description: The diet from user.
+          required: false
+          type: number
+          format: integer
+  
+        -  
+          name: objective
+          in: query
+          description: Objective from the diet.
+          required: false
+          type: number
+          format: integer
+        -  
+          name: location
+          in: query
+          description: Location from the diet.
           required: false
           type: number
           format: integer
@@ -378,6 +463,74 @@ paths:
               data:
                 $ref: '#/definitions/ErrorModel'
                 
+  /diet/{diet-id}/objective:
+    get:
+      tags:
+      - Diet
+      description: |
+        Get informations about the diet especific.
+    
+      parameters:
+        - $ref: '#/parameters/diet-id'
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Diet'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+                
+  /diet/{diet-id}/food/location:
+    get:
+      tags:
+      - Diet
+      description: |
+        Get informations about the location of food diet especific.
+    
+      parameters:
+        - $ref: '#/parameters/diet-id'
+        -
+          name: food-id
+          in: query
+          description: The food id.
+          required: false
+          type: number
+          format: integer
+        -
+          name: location name
+          in: query
+          description: The location name.
+          required: false
+          type: number
+          format: integer
+        
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Diet'
+        404:
+          description: Not found
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/ErrorModel'
+                
+
+                
   /food:
     get:
       tags:
@@ -503,15 +656,22 @@ paths:
                 $ref: '#/definitions/ErrorModel'
                 
                 
-  /food/{food-id}/objective:
+  /food/{food-id}/location:
     get:
       tags:
       - Food
-      - Objective
+      - Location
       description: |
         Get objective about the food.
       parameters:
         - $ref: '#/parameters/food-id'
+        -
+          name: location name
+          in: query
+          description: The location name.
+          required: false
+          type: number
+          format: integer
 
       responses:
         200:
@@ -784,12 +944,11 @@ definitions:
     - weight
     - height
     - age
+    - phone
     properties:
       id:
         type : integer
       name:
-        type: string
-      surname:
         type: string
       password:
         type : string
@@ -797,6 +956,8 @@ definitions:
         type: integer
       e-mail:
         type: string
+      phone:
+        type : string
       weight : 
         type : number
         format : double
@@ -860,8 +1021,10 @@ definitions:
         type: string
       latitude:
         type: number
+        format : double
       longitude:
         type: number
+        format : double
         
   Food:
     type : object

@@ -7,7 +7,7 @@ class RequestController
 {
 	const VALID_METHODS = array('GET', 'POST', 'PUT', 'DELETE');
 	const VALID_PROTOCOLS = array('HTTPS/1.0', 'HTTP/1.1', 'HTTPS/1.1');
-	const VALID_PATH = '/aula6/';
+	const VALID_PATH = '/Diet/';
 	const VALID_SERVER_NAME = 'localhost';
 
 

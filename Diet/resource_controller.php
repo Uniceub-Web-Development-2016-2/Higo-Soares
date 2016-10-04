@@ -34,7 +34,7 @@ var_dump($resource);
 		if($key==$result){
 		$table .= $value. ' JOIN ';
 		$tablename = substr($table,0,-5);
-var_dump($tablename);
+var_dump($table);
 
 		}
 		}

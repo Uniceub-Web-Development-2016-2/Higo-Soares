@@ -54,7 +54,7 @@ class Request{
         }
         public function setResource($resource){
         	$s = explode("?", $resource);
-			$q = substr($s[0],7);
+			$q = substr($s[0],6);
 			
 		$this->resource = $q;		
 	}

@@ -7,8 +7,9 @@ include_once ('db_manager.php');
 class ResourceController
 {	
  	private $METHODMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove' ];
-	private $tables = array("user" => "tb_user" , "food" => "tb_food" , "objective" => "tb_objective", "diet" => "tb_diet", "location" => "tb_location", "diet/food"=> "td_diet_food" , "food/location"=> "td_food_location", "user/diet"=> "td_user_diet",
-"user/diet/objective"=> "tb_user JOIN tb_diet JOIN tb_objective JOIN td_user_diet", "food/location" => "", "diet/objective"=>"", "diet/food/"=>"", "diet/food/objective/"=> "", "user/diet/food/location"=> "");
+	private $tables = array("user" => "tb_user" , "food" => "tb_food" , "objective" => "tb_objective", "diet" => "tb_diet", "location" => "tb_location");
+	private $tables_relational = array("diet/food"=> "td_diet_food" , "food/location"=> "td_food_location", "user/diet"=> "td_user_diet",
+"user/diet/objective"=> "td_user_diet", "diet/food/"=>"td_diet_food", "diet/food/objective/"=> "td_diet_food", "user/diet/food/location"=> "td_diet_food JOIN td_food_location");
 
 
 
@@ -23,10 +24,8 @@ class ResourceController
 		$table="";
 		$tablename="";
 
-
 		$path = $request->getResource();
 		$resource = explode("/", $path);
-var_dump($resource);
 
 		foreach($resource as $result){
 
@@ -34,12 +33,11 @@ var_dump($resource);
 		if($key==$result){
 		$table .= $value. ' JOIN ';
 		$tablename = substr($table,0,-5);
-var_dump($table);
-
 		}
 		}
 
 		}
+		$tablename .= self::select_relation($request);
 
 		
 		if(empty($request->getParameters())){
@@ -56,6 +54,17 @@ var_dump($table);
 		var_dump($query);
 		return $result->fetchAll(PDO::FETCH_OBJ);
 
+	}
+
+	private function select_relation($request){
+		$table_relation="";
+
+		foreach ($this->tables_relational as $key => $value) {
+		if($key==$request->getResource()){
+		$table_relation .= ' JOIN '.$value;
+		}
+		}
+		return $table_relation; 
 	}	
 
 		
@@ -63,7 +72,7 @@ var_dump($table);
 		
 		$query = "";		
 		foreach($params as $key => $value) {
-			$query .= $key." = '".$value."' AND ";	
+			$query .= $key." = ".$value." AND ";	
 		}
 		$query = substr($query,0,-5);
 		return $query;

@@ -4,7 +4,7 @@ swagger: '2.0'
 #                                        Api Info                              #
 ################################################################################
 info:
-  version: "1.0.0"
+  version: "1.0.1"
   title: Diet API
   description : Web application that involves people with interests in hypertrophy , weight loss , nutritional education, healthier style . Users can know of their mass indices mascular , lean mass, fat also seek a new diet , watch your calorie information of food , prices, where to buy.
   
@@ -25,37 +25,7 @@ consumes:
 #                                        Parameters                            #
 ################################################################################
 parameters:
-  user-id:
-    name: user-id
-    in: path
-    description: The user id
-    required : true
-    type : number
-    format : integer
-    
-  diet-id:  
-    name: diet-id
-    in: path
-    description: The diet id.
-    required: true
-    type: number
-    format: integer
-    
-  food-id:
-    name: food-id
-    in: path
-    description: The food id.
-    required: true
-    type: number
-    format: integer
-    
-  objective-id:
-    name: objective-id
-    in: path
-    description: The objective id.
-    required: true
-    type: number
-    format: integer
+
     
   email-id:
     name: email-id
@@ -70,19 +40,21 @@ parameters:
 ################################################################################
 paths:
 
-  /user:
+  /user?:
     get:
       tags:
       - User
       description: |
-        Get informations about all users.
+        Get informations about all users or user especific.
       parameters:
          -
-          name: username
+          name: idt_user
           in: query
-          description: The user name.
+          description: The user id.
           required: false
-          type: string
+          type: number
+          format : integer
+          
 
       responses:
         200:
@@ -128,46 +100,22 @@ paths:
               data:
                 $ref: '#/definitions/ErrorModel'
                 
-  /user/{user-id}:
-    get:
-      tags:
-      - User
-      description: |
-        Get informations about a user especific.
-      parameters:
-        -
-          name: user-id
-          in: path
-          description: The user identificador.
-          required: true
-          type: number
-          format: integer
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/User'
-        404:
-          description: Not found
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/ErrorModel'
-                
     put:
       tags:
       - User
       description: |
         Change informations about a user especific.
       parameters:
-        - $ref: '#/parameters/user-id'
+        -
+          name: idt_user
+          in: query
+          description: The food id.
+          required: true
+          type: number
+          format : integer
         -
           in: body
-          name: informations-user
+          name: informations-food
           required: true
           schema:
             $ref: '#/definitions/User'
@@ -179,7 +127,6 @@ paths:
             properties:
               data:
                 $ref: '#/definitions/User'
-        
 
         406:
           description: Not Acceptable
@@ -189,17 +136,18 @@ paths:
               data:
                 $ref: '#/definitions/ErrorModel'
                 
-  /user/{user-id}/diet:
+  
+                
+  /user/diet?cod_user=idt_user&cod_diet=idt_diet:
     get:
       tags:
       - User
       - Diet
       description: |
-        Get informations about a diet from the user.
+        Get informations about a diet from the all users or especific.
       parameters:
-        - $ref: '#/parameters/user-id'
-        -
-          name: diet-id
+         -
+          name: idt_user
           in: query
           description: The diet from user.
           required: false
@@ -215,7 +163,7 @@ paths:
             type: object
             properties:
               data:
-                $ref: '#/definitions/Diet'
+                $ref: '#/definitions/User'
         404:
           description: Not found
           schema:
@@ -225,30 +173,24 @@ paths:
                 $ref: '#/definitions/ErrorModel'
                 
                 
-  /user/{user-id}/diet/objective:
+  /user/diet/objective?cod_objective=idt_objective&cod_user=idt_user&cod_diet=idt_diet :
     get:
       tags:
       - User
       - Diet
+      - Objective
       description: |
-        Get informations about a objective from diet the user.
+        Get informations about a objective from diet the all user or especific.
       parameters:
-        - $ref: '#/parameters/user-id'
+       
         -
-          name: diet-id
+          name: idt_user
           in: query
           description: The diet from user.
           required: false
           type: number
           format: integer
-  
-        -  
-          name: objective
-          in: query
-          description: Objective from the diet.
-          required: false
-          type: number
-          format: integer
+
       
       responses:
         200:
@@ -257,7 +199,7 @@ paths:
             type: object
             properties:
               data:
-                $ref: '#/definitions/Diet'
+                $ref: '#/definitions/User'
         404:
           description: Not found
           schema:
@@ -266,98 +208,18 @@ paths:
               data:
                 $ref: '#/definitions/ErrorModel'
                 
-                
-  /user/{user-id}/diet/food/location:
-    get:
-      tags:
-      - User
-      - Diet
-      description: |
-        Get informations about a food location from diet the user.
-      parameters:
-        - $ref: '#/parameters/user-id'
-        -
-          name: diet-id
-          in: query
-          description: The diet from user.
-          required: false
-          type: number
-          format: integer
-  
-        -  
-          name: objective
-          in: query
-          description: Objective from the diet.
-          required: false
-          type: number
-          format: integer
-        -  
-          name: location
-          in: query
-          description: Location from the diet.
-          required: false
-          type: number
-          format: integer
-      
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/Diet'
-        404:
-          description: Not found
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/ErrorModel'
                 
 
-  /diet/{diet-id}/food:
-    get:
-      tags:
-      - Diet
-      - Food
-      description: |
-        Get informations about the foods from the diet.
-      parameters:
-        - $ref: '#/parameters/diet-id'
-          
-        -
-          name: food-name
-          in: query
-          description: The food name
-          required: false
-          type : string
-
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/Diet'
-        404:
-          description: Not found
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/ErrorModel'
                 
-  /diet:
+  /diet?:
     get:
       tags:
       - Diet
       description: |
-        Get informations about all diets.
+        Get informations about all diets or especific.
       parameters:
         -
-          name: diet-id
+          name: idt_food
           in: query
           description: The diet id.
           required: false
@@ -370,7 +232,7 @@ paths:
             type: object
             properties:
               data:
-                $ref: '#/definitions/Food'
+                $ref: '#/definitions/Diet'
         404:
           description: Not found
           schema:
@@ -407,39 +269,19 @@ paths:
               data:
                 $ref: '#/definitions/ErrorModel'
                 
-  /diet/{diet-id}:
-    get:
-      tags:
-      - Diet
-      description: |
-        Get informations about the diet especific.
-    
-      parameters:
-        - $ref: '#/parameters/diet-id'
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/Diet'
-        404:
-          description: Not found
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/ErrorModel'
-                
-                
     put:
       tags:
       - Diet
       description: |
         Change informations about a diet especific.
       parameters:
-        - $ref: '#/parameters/diet-id'
+        -
+          name: idt_diet
+          in: query
+          description: The diet id.
+          required: true
+          type: number
+          format: integer
         -
           in: body
           name: informations-diet
@@ -462,16 +304,25 @@ paths:
             properties:
               data:
                 $ref: '#/definitions/ErrorModel'
+  
                 
-  /diet/{diet-id}/objective:
+
+  /diet/food?cod_food=idt_food&cod_diet=idt_diet:
     get:
       tags:
       - Diet
+      - Food
       description: |
-        Get informations about the diet especific.
-    
+        Get informations about the foods from the all diets or especific.
       parameters:
-        - $ref: '#/parameters/diet-id'
+        -
+          name: idt_diet
+          in: query
+          description: The diet id.
+          required: false
+          type : number
+          format : integer
+
       responses:
         200:
           description: Successful response
@@ -486,33 +337,27 @@ paths:
             type: object
             properties:
               data:
-                $ref: '#/definitions/ErrorModel'
+                $ref: '#/definitions/ErrorModel'              
                 
                 
-  /diet/{diet-id}/food/location:
+  
+                
+  /diet/objective?cod_objective=idt_objective:
     get:
       tags:
       - Diet
+      - Objective
       description: |
-        Get informations about the location of food diet especific.
+        Get informations about the objective from diet or especific.
     
       parameters:
-        - $ref: '#/parameters/diet-id'
         -
-          name: food-id
+          name: idt_diet
           in: query
-          description: The food id.
+          description: The diet id.
           required: false
-          type: number
-          format: integer
-        -
-          name: location name
-          in: query
-          description: The location name.
-          required: false
-          type: number
-          format: integer
-        
+          type : number
+          format : integer
       responses:
         200:
           description: Successful response
@@ -531,28 +376,21 @@ paths:
                 
 
                 
-  /food:
+  /food?:
     get:
       tags:
       - Food
       description: |
-        Get informations about all food.
+        Get informations about all food or especific.
       parameters:
         -
-          name: food-id
+          name: idt_food
           in: query
           description: The food id.
           required: false
           type: number
-          format: integer
-        -
-          name: name
-          in: query
-          description: Name of food.
-          required: false
-          type: number
-          format: integer
-      
+          format : integer
+ 
       responses:
         200:
           description: Successful response
@@ -600,38 +438,19 @@ paths:
                 $ref: '#/definitions/ErrorModel'
                 
                 
-                
-  /food/{food-id}:
-    get:
-      tags:
-      - Food
-      description: |
-        Get informations about the diet especific.
-      parameters:
-        - $ref: '#/parameters/food-id'
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/Food'
-        404:
-          description: Not found
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/ErrorModel'
-                
     put:
       tags:
       - Food
       description: |
         Change informations about a food especific.
       parameters:
-        - $ref: '#/parameters/food-id'
+        -
+          name: idt_food
+          in: query
+          description: The food id.
+          required: true
+          type: number
+          format : integer
         -
           in: body
           name: informations-food
@@ -656,7 +475,7 @@ paths:
                 $ref: '#/definitions/ErrorModel'
                 
                 
-  /food/{food-id}/location:
+  /food/location?cod_food=idt_food&cod_location=idt_location:
     get:
       tags:
       - Food
@@ -664,9 +483,9 @@ paths:
       description: |
         Get objective about the food.
       parameters:
-        - $ref: '#/parameters/food-id'
+
         -
-          name: location name
+          name: idt_food
           in: query
           description: The location name.
           required: false
@@ -691,20 +510,21 @@ paths:
                 $ref: '#/definitions/ErrorModel'
                 
                 
-  /objective:
+  /objective?:
     get:
       tags:
       - Objective
       description: |
-        Get informations about all objective.
+        Get informations about all objective or especific.
       parameters:
 
         -
-          name: name
+          name: idt_objective
           in: query
-          description: Name of objective.
+          description: Objective id.
           required: false
-          type: string
+          type: number
+          format : integer
 
       responses:
         200:
@@ -752,38 +572,20 @@ paths:
               data:
                 $ref: '#/definitions/ErrorModel'
                 
-                
-  /objective/{objective-id}:
-    get:
-      tags:
-      - Objective
-      description: |
-        Get informations about the object especific.
-      parameters:
-        - $ref: '#/parameters/objective-id'
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/Objective'
-        404:
-          description: Not found
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/definitions/ErrorModel'
-                
+
     put:
       tags:
       - Objective
       description: |
         Change informations about a objective especific.
       parameters:
-        - $ref: '#/parameters/objective-id'
+        -
+          name: idt_objective
+          in: query
+          description: Objective id.
+          required: true
+          type: number
+          format : integer
         -
           in: body
           name: informations-objective
@@ -808,19 +610,20 @@ paths:
                 $ref: '#/definitions/ErrorModel'
                 
                 
-  /location/{location-id}:
+  /location?:
     get:
       tags:
       - Location
       description: |
-        Get informations about a location.
+        Get informations about all locations or especific.
       parameters:
-      -
-        name: location-id
-        description: Location id
-        in: path
-        type: integer
-        required: true
+        -
+          name: idt_location
+          in: query
+          description: Location id.
+          required: true
+          type: number
+          format : integer
 
       responses:
         200:
@@ -838,38 +641,6 @@ paths:
               data:
                 $ref: '#/definitions/ErrorModel'
                 
-  /locations/search:
-    get:
-      tags:
-        - Location
-      description: Search for a location by maps coordinate.
-      parameters:
-        - name: distance
-          in: query
-          description: Default is 1000m (distance=1000), max distance is 5000.
-          type: integer
-
-        - name: latitude
-          in: query
-          description: |
-            Latitude of the center search coordinate.
-          type: number
-
-        - name: longitude
-          in: query
-          description: |
-            Longitude of the center search coordinate.
-          type: number
-      responses:
-        200:
-          description: OK
-          schema:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: '#/definitions/Location'
 
                 
   /users/e-mail:

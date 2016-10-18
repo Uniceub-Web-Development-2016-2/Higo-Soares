@@ -71,4 +71,8 @@ class Request{
         public function getParameters(){
                 return $this->params;
         }
+
+public function getBody(){
+			return $this->body;
+		}
 }

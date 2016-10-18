@@ -1,0 +1,1150 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.1",
+        "title": "Diet API",
+        "description": "Web application that involves people with interests in hypertrophy , weight loss , nutritional education, healthier style . Users can know of their mass indices mascular , lean mass, fat also seek a new diet , watch your calorie information of food , prices, where to buy."
+    },
+    "host": "localhost",
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "parameters": {
+        "email-id": {
+            "name": "email-id",
+            "in": "path",
+            "description": "The e-mail id.",
+            "required": true,
+            "type": "number",
+            "format": "integer"
+        }
+    },
+    "paths": {
+        "/user?": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "description": "Get informations about all users or user especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_user",
+                        "in": "query",
+                        "description": "The user id.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "description": "Create a new user.\n",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "user",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "description": "Change informations about a user especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_user",
+                        "in": "query",
+                        "description": "The food id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "informations-food",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Not Acceptable",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/diet?cod_user=idt_user&cod_diet=idt_diet": {
+            "get": {
+                "tags": [
+                    "User",
+                    "Diet"
+                ],
+                "description": "Get informations about a diet from the all users or especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_user",
+                        "in": "query",
+                        "description": "The diet from user.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/diet/objective?cod_objective=idt_objective&cod_user=idt_user&cod_diet=idt_diet": {
+            "get": {
+                "tags": [
+                    "User",
+                    "Diet",
+                    "Objective"
+                ],
+                "description": "Get informations about a objective from diet the all user or especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_user",
+                        "in": "query",
+                        "description": "The diet from user.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/diet?": {
+            "get": {
+                "tags": [
+                    "Diet"
+                ],
+                "description": "Get informations about all diets or especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_food",
+                        "in": "query",
+                        "description": "The diet id.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Diet"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Diet"
+                ],
+                "description": "Create a new diet.\n",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "diet",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Diet"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Diet created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Diet"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Diet"
+                ],
+                "description": "Change informations about a diet especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_diet",
+                        "in": "query",
+                        "description": "The diet id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "informations-diet",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Diet"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Diet"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Not Acceptable",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/diet/food?cod_food=idt_food&cod_diet=idt_diet": {
+            "get": {
+                "tags": [
+                    "Diet",
+                    "Food"
+                ],
+                "description": "Get informations about the foods from the all diets or especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_diet",
+                        "in": "query",
+                        "description": "The diet id.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Diet"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/diet/objective?cod_objective=idt_objective": {
+            "get": {
+                "tags": [
+                    "Diet",
+                    "Objective"
+                ],
+                "description": "Get informations about the objective from diet or especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_diet",
+                        "in": "query",
+                        "description": "The diet id.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Diet"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/food?": {
+            "get": {
+                "tags": [
+                    "Food"
+                ],
+                "description": "Get informations about all food or especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_food",
+                        "in": "query",
+                        "description": "The food id.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Food"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Food"
+                ],
+                "description": "Create a new food.\n",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "food",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Food"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Food created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Food"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Food"
+                ],
+                "description": "Change informations about a food especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_food",
+                        "in": "query",
+                        "description": "The food id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "informations-food",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Food"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Food"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Not Acceptable",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/food/location?cod_food=idt_food&cod_location=idt_location": {
+            "get": {
+                "tags": [
+                    "Food",
+                    "Location"
+                ],
+                "description": "Get objective about the food.\n",
+                "parameters": [
+                    {
+                        "name": "idt_food",
+                        "in": "query",
+                        "description": "The location name.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Food"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/objective?": {
+            "get": {
+                "tags": [
+                    "Objective"
+                ],
+                "description": "Get informations about all objective or especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_objective",
+                        "in": "query",
+                        "description": "Objective id.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Objective"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Objective"
+                ],
+                "description": "Create a new objective.\n",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "objective",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Objective"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Objective created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Objective"
+                ],
+                "description": "Change informations about a objective especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_objective",
+                        "in": "query",
+                        "description": "Objective id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "informations-objective",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Objective"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Food"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Not Acceptable",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/location?": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "description": "Get informations about all locations or especific.\n",
+                "parameters": [
+                    {
+                        "name": "idt_location",
+                        "in": "query",
+                        "description": "Location id.",
+                        "required": true,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Location"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/e-mail": {
+            "post": {
+                "tags": [
+                    "User",
+                    "E-mail"
+                ],
+                "description": "Create a e-mail for support application:\n* The total length of the e-mail cannot exceed 300 characters.\n",
+                "parameters": [
+                    {
+                        "name": "TEXT",
+                        "description": "Text to post a e-mail.\n",
+                        "in": "body",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/E-mail"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{email-id}/e-mail": {
+            "put": {
+                "tags": [
+                    "User",
+                    "E-mail"
+                ],
+                "description": "Change informations in the message for e-mail support.\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/email-id"
+                    },
+                    {
+                        "in": "body",
+                        "name": "informations-email",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/E-mail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/E-mail"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Not Acceptable",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/ErrorModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "required": [
+                "name",
+                "password",
+                "cpf",
+                "e-mail",
+                "weight",
+                "height",
+                "age",
+                "phone"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "cpf": {
+                    "type": "integer"
+                },
+                "e-mail": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "height": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "age": {
+                    "type": "integer"
+                },
+                "diet": {
+                    "type": "object",
+                    "properties": {
+                        "count": {
+                            "type": "integer"
+                        },
+                        "diets": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Diet"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Diet": {
+            "type": "object",
+            "required": [
+                "ideal weight",
+                "objective"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "ideal weight": {
+                    "type": "string"
+                },
+                "date init": {
+                    "type": "number",
+                    "format": "date"
+                },
+                "date final": {
+                    "type": "number",
+                    "format": "date"
+                },
+                "objective": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "$ref": "#/definitions/Objective"
+                        }
+                    }
+                },
+                "foods": {
+                    "type": "object",
+                    "properties": {
+                        "count": {
+                            "type": "integer"
+                        },
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Food"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Location": {
+            "type": "object",
+            "required": [
+                "name local",
+                "latitude",
+                "longitude"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name local": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "double"
+                }
+            }
+        },
+        "Food": {
+            "type": "object",
+            "required": [
+                "name",
+                "calories",
+                "weight",
+                "location"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "calories": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "weight": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "location": {
+                    "type": "object",
+                    "properties": {
+                        "local": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Location"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Objective": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "E-mail": {
+            "type": "object",
+            "required": [
+                "sender",
+                "recipient",
+                "body"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "sender": {
+                    "type": "string"
+                },
+                "recipient": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "copy": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "attachment": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "$ref": "#/definitions/Attachment"
+                        }
+                    }
+                }
+            }
+        },
+        "Attachment": {
+            "type": "object",
+            "properties": {
+                "images": {
+                    "properties": {
+                        "low_resolution": {
+                            "$ref": "#/definitions/Image"
+                        },
+                        "thumbnail": {
+                            "$ref": "#/definitions/Image"
+                        },
+                        "standard_resolution": {
+                            "$ref": "#/definitions/Image"
+                        }
+                    }
+                }
+            }
+        },
+        "Image": {
+            "type": "object",
+            "properties": {
+                "width": {
+                    "type": "integer"
+                },
+                "height": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "ErrorModel": {
+            "type": "object",
+            "required": [
+                "code",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

@@ -40,6 +40,7 @@ class ResourceController
 				return self::select($query);
  		}else{
 		$query = 'SELECT * FROM '.$tablename.' WHERE '.self::queryParamsGet($request->getParameters()). ';';
+		
 		return self::select($query); 
 		}
 	}
@@ -108,7 +109,7 @@ private function create($request) {
 	
 	private function execution_query($query) {
 		$conn = (new DBConnector());
-		if ($conn->query($query) === TRUE) {
+		if ($conn->query($query) == TRUE) {
     			echo "New record created successfully!";
 		} else {
     			echo "Error: " . $query . "<br>";
@@ -137,6 +138,7 @@ private function create($request) {
 		$where = " WHERE ";
 		$array = json_decode($json, true);
 		foreach($array as $key => $value) {
+		var_dump($key);
 			if($key != 'id')
 				$criteria .= $key." = '".$value."',";
 			
@@ -163,6 +165,7 @@ private function create($request) {
 		return "'".$string."'";
         
         }
+	
 	
 
 	

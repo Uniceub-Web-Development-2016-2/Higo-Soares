@@ -1,0 +1,15 @@
+@media (min-width: 992px){
+	.cover-container.container-page{
+		width:1200px;
+	}
+	
+	.masthead.page, .mastfoot.page{
+		width:100%;
+	}
+}
+
+@media (min-width: 768px){
+	.masthead-brand.page{
+		float:none;
+	}
+}

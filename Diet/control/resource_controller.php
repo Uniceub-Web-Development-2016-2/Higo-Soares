@@ -6,7 +6,7 @@ include_once ('./db/db_manager.php');
 
 class ResourceController
 {	
- 	private $METHODMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove' ];
+ 	private $METHODMAP = ['GET' => 'search' , 'iPOST' => 'create' , 'POST'=> 'validate_login','PUT' => 'update', 'DELETE' => 'remove' ];
 	private $tables_relational = array("diet/food"=> "diet_food" , "food/location"=> "food_location", "user/diet"=> "user_diet","diet/food/"=>"diet_food");
 
 
@@ -45,7 +45,7 @@ class ResourceController
 		}
 	}
 	
-	private function select($query){
+	public function select($query){
 		$result = (new DBConnector())->query($query);
 		var_dump($query);
 		return $result->fetchAll(PDO::FETCH_OBJ);
@@ -99,25 +99,21 @@ private function create($request) {
         }
 	
 	
-	private function selection_query($query) {
-		$conn = (new DBConnector())->query($query);
-		$results = $conn->fetchAll(PDO::FETCH_ASSOC);
-		$json=json_encode($results, JSON_UNESCAPED_UNICODE);
-		return $json;
-	}
-	
-	
 	private function execution_query($query) {
-		$conn = (new DBConnector());
-		if ($conn->query($query) == TRUE) {
-    			echo "New record created successfully!";
+		$conn = (new DBConnector())->prepare($query);
+		$conn->execute();
+		if ($conn->rowCount() > 0) {
+    			echo '
+    <script>
+        alert("Sucesso!");
+        window.location.href = "login.html";
+    </script>
+';
 		} else {
     			echo "Error: " . $query . "<br>";
 		}
 	}
 	
-	
-
 		
 	private function queryParams($params) {
 		$query = "";		
@@ -165,7 +161,50 @@ private function create($request) {
 		return "'".$string."'";
         
         }
+
+	private function validate_login($request)
+	{        
+		$body = $request->getBody();
+		$SQL='SELECT id, nme_user, num_password, admin FROM user WHERE '.$this->getFormsLogin($body);			
+		return self::login_query($SQL);
+		//echo json_encode($array);
+
+	}
+
+	private function getFormsLogin($json)
+	{
+		$array = json_decode($json, true);
+		$SQL = "";
+		foreach($array as $key => $value) {
+		$SQL .= $key.' = '."'".$value."'".' AND ';
+		}
+		$SQL = substr($SQL,0,-5);
+		
+		return $SQL;
+	}
+
+	private function login_query($query) {
+		session_start();
+		$conn = (new DBConnector())->prepare($query);
+		$conn->execute();
+		if ($conn->rowCount() > 0) {
+		//$_SESSION['id']= $query['id']; 
+		//$_SESSION['nme_user'] = stripslashes($query['nme_user']); 
+		header('Location: ../../Client_Diet/page.html'); 
+		echo '<script>
+		alert("Sucesso!");
+		window.location.href = "../../Client_Diet/page.html";
+	    		</script>';
 	
+		}else{
+		echo     '<script>
+		alert("Senha ou login inválido!");
+		window.location.href = "../../Client_Diet/login.html";
+	    		</script>';
+		} 
+		
+	}
+		
 	
 
 	

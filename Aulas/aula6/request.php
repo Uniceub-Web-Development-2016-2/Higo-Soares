@@ -52,16 +52,10 @@ class Request{
         public function getRemote_IP(){
                 return $this->remote_ip;
         }
-	public function setResource($resource){
+        public function setResource($resource){
         	$s = explode("?", $resource);
 		$r = explode("/", $s[0]);
 		$this->resource = $r[2];		
-	}
-        public function setResource2($resource){
-        	$s = explode("?", $resource);
-			$q = substr($s[0],6);
-			
-		$this->resource = $q;		
 	}
         public function getResource(){
                 return $this->resource;
@@ -76,8 +70,4 @@ class Request{
         public function getParameters(){
                 return $this->params;
         }
-
-public function getBody(){
-			return $this->body;
-		}
 }

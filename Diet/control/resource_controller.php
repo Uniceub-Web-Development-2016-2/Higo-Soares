@@ -6,7 +6,7 @@ include_once ('./db/db_manager.php');
 
 class ResourceController
 {	
- 	private $METHODMAP = ['GET' => 'search' , 'iPOST' => 'create' , 'POST'=> 'validate_login','PUT' => 'update', 'DELETE' => 'remove' ];
+ 	private $METHODMAP = ['GET' => 'search' , 'iPOST' => 'create', 'POST' => 'validate_login' , 'PUT' => 'update', 'DELETE' => 'remove' ];
 	private $tables_relational = array("diet/food"=> "diet_food" , "food/location"=> "food_location", "user/diet"=> "user_diet","diet/food/"=>"diet_food");
 
 
@@ -167,7 +167,7 @@ private function create($request) {
 		$body = $request->getBody();
 		$SQL='SELECT id, nme_user, num_password, admin FROM user WHERE '.$this->getFormsLogin($body);			
 		return self::login_query($SQL);
-		//echo json_encode($array);
+
 
 	}
 
@@ -190,7 +190,6 @@ private function create($request) {
 		if ($conn->rowCount() > 0) {
 		//$_SESSION['id']= $query['id']; 
 		//$_SESSION['nme_user'] = stripslashes($query['nme_user']); 
-		header('Location: ../../Client_Diet/page.html'); 
 		echo '<script>
 		alert("Sucesso!");
 		window.location.href = "../../Client_Diet/page.html";
@@ -209,7 +208,4 @@ private function create($request) {
 
 	
 }
-
-
-
-
+?>

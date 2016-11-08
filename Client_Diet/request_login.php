@@ -3,7 +3,7 @@
 include('httpful.phar');
 
 
-$post_login = 'http://localhost/Diet/controle/resource_controller.php?';
+$post_login = 'http://localhost/Diet/user/';
 
 $response = \Httpful\Request::post($post_login)
 ->sendsJson()
@@ -11,3 +11,5 @@ $response = \Httpful\Request::post($post_login)
 ->send();
 
 echo  $response->body;
+
+

@@ -5,6 +5,7 @@ class Request{
         private $server_ip;
         private $remote_ip;
         private $resource;
+        private $resource2;
         private $params;
 	private $body;
   
@@ -15,6 +16,7 @@ class Request{
         $this->server_ip = $serverAddress;
         $this->remote_ip = $clientAddress;
         $this->setResource($path);
+        $this->setResource2($path);
         $this->setParams($queryString);
         $this->body = $body;
     }
@@ -52,12 +54,12 @@ class Request{
         public function getRemote_IP(){
                 return $this->remote_ip;
         }
-	public function setResource($resource){
+	public function setResource2($resource){
         	$s = explode("?", $resource);
 		$r = explode("/", $s[0]);
-		$this->resource = $r[2];		
+		$this->resource2 = $r[2];		
 	}
-        public function setResource2($resource){
+        public function setResource($resource){
         	$s = explode("?", $resource);
 			$q = substr($s[0],6);
 			
@@ -66,6 +68,10 @@ class Request{
         public function getResource(){
                 return $this->resource;
         }
+        public function getResource2(){
+                return $this->resource2;
+        }
+   
         
 	public function setParams($paramsString)
     	{

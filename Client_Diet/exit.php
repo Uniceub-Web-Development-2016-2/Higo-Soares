@@ -1,7 +1,8 @@
 <?php 
 // Inicia sessões, para assim poder destruí-las 
-session_start(); 
+session_start();
+session_reset(); 
 session_destroy(); 
 
-header("Location: login.html"); 
+header("Location: login.php"); 
 ?>

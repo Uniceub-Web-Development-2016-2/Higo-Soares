@@ -40,7 +40,7 @@
               <h3 class="masthead-brand">Diet's Healthy</h3>
               <nav>
                 <ul class="nav masthead-nav">
-                  <li class="active"><a href="index.html">Início</a></li>
+                  <li class="active"><a href="index.php">Início</a></li>
                   <li><a href="meet.html">Conheça</a></li>
                   <li><a href="#">Contato</a></li>
                 </ul>
@@ -52,8 +52,8 @@
             <h1 class="cover-heading">Sua saúde é importante!.</h1>
             <p class="lead">Cuide bem de sua saúde porque é o valor mais importante de sua vida. Você, somente você, é responsável por sua saúde ou doença. É impossível viver feliz se estamos doentes. Boa nutrição sem excesso, exercícios regulares como caminhar, dormir bem, muita água, não fumar, não beber álcool, não drogas, são os primeiros passos para alcançar a saúde perfeita, gerencie suas dietas conosco e sinta a diferença!</p>
             <p class="lead">		 
-              <p><a href="register.html">Não é cadastrado? Cadastre-se!</a></p>
-              <a href="login.html" class="btn btn-lg btn-default">Log In</a>
+              <p><a href="register.php">Não é cadastrado? Cadastre-se!</a></p>
+              <a href="login.php" class="btn btn-lg btn-default">Log In</a>
             </p>
           </div>
 

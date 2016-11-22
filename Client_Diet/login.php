@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="fonts/favicon.ico">
 
-    <title>Cadastre-se</title>
+    <title>Entre</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -41,7 +41,7 @@
               <h3 class="masthead-brand">Diet's Healthy</h3>
               <nav>
                 <ul class="nav masthead-nav">
-                  <li><a href="index.html">Início</a></li>
+                  <li><a href="index.php">Início</a></li>
                   <li><a href="meet.html">Conheça</a></li>
                   <li><a href="#">Contato</a></li>
                 </ul>
@@ -49,59 +49,31 @@
             </div>
           </div>
 
-<form action="requests.php" method="post" class="form-horizontal">
+<form action="request_login.php"  method="post" class="form-horizontal">
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-4 control-label">Nome</label>
     <div class="col-sm-4">
-      <input type="text" name="nme_user" required="required" class="form-control form-control-login" id="inputEmail3" placeholder="nome" pattern="[a-z\s]+$">
-    </div>
-  </div>
-    <div class="form-group">
-    <label for="inputEmail3" class="col-sm-4 control-label">Password</label>
-    <div class="col-sm-4">
-      <input type="password" name="num_password" required="required" class="form-control form-control-login" id="inputEmail3" placeholder="password">
-    </div>
-  </div>
-    <div class="form-group">
-    <label for="inputEmail3" class="col-sm-4 control-label">CPF</label>
-    <div class="col-sm-4">
-      <input type="text" name="val_cpf" required="required" maxlength="11" class="form-control form-control-login" id="inputEmail3" placeholder="cpf" pattern="[0-9]+$">
-    </div>
-  </div>
-    <div class="form-group">
-    <label for="inputEmail3" class="col-sm-4 control-label">E-mail</label>
-    <div class="col-sm-4">
-      <input type="email" name="nme_email" required="required" class="form-control form-control-login" id="inputEmail3" placeholder="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-    </div>
-  </div>
-    <div class="form-group">
-    <label for="inputEmail3" class="col-sm-4 control-label">Telefone</label>
-    <div class="col-sm-4">
-      <input type="text" name="num_phone" required="required" maxlength="13" class="form-control form-control-login" id="inputEmail3" placeholder="telefone">
-	  <!-- pattern="\([0-9]{2}\)[0-9]{4,6}-[0-9]{3,4}$" -->
-    </div>
-  </div>
-    <div class="form-group">
-    <label for="inputEmail3" class="col-sm-4 control-label">Peso</label>
-    <div class="col-sm-4">
-      <input type="text" name="val_weight" required="required" class="form-control form-control-login" id="inputEmail3" placeholder="peso">
-    </div>
-  </div>
-    <div class="form-group">
-    <label for="inputEmail3" class="col-sm-4 control-label">Altura</label>
-    <div class="col-sm-4">
-      <input type="text" name="val_height" required="required" class="form-control form-control-login" id="inputEmail3" placeholder="altura">
+      <input type="text" name="user" required="required" maxlength="11" class="form-control form-control-login" id="inputEmail3" placeholder="user">
     </div>
   </div>
   <div class="form-group">
-    <label for="inputPassword3" class="col-sm-4 control-label">Idade</label>
+    <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
     <div class="col-sm-4">
-      <input type="number" name="val_age" required="required" maxlength="3" class="form-control" id="inputPassword3" placeholder="idade" pattern="[0-9]+$">
+      <input type="password" name="password" required="required" class="form-control" id="inputPassword3" placeholder="password">
     </div>
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-8">
-      <button type="submit" class="btn btn-default">Sign in</button>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> Remember me
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-8">
+      <button type="submit" id="login" class="btn btn-default">Log in</button>
     </div>
   </div>
 </form>
@@ -123,7 +95,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>

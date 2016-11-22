@@ -2,9 +2,7 @@
 
 include('httpful.phar');
 
-
 $post_request = 'http://localhost/Diet/user/create';
-
 
 $response = \Httpful\Request::post($post_request)
 ->sendsJson()
@@ -12,3 +10,7 @@ $response = \Httpful\Request::post($post_request)
 ->send();
 
 echo  $response->body;
+
+
+	
+

@@ -6,49 +6,85 @@ include_once ('./db/db_manager.php');
 
 class ResourceController
 {	
- 	private $METHODMAP = ['GET' => 'search' , 'iPOST' => 'create', 'POST' => 'validate_login' , 'PUT' => 'update', 'DELETE' => 'remove' ];
-	private $tables_relational = array("diet/food"=> "diet_food" , "food/location"=> "food_location", "user/diet"=> "user_diet","diet/food/"=>"diet_food");
+	private $RESOURCEMAP = ['user' => 'control_user', 'diet' => 'control_diet', 'food' => 'control_food', 'objective' => 'control_objective', 'location' => 'control_location', 'category' => 'control_category', 'index.php' => 'index'];
+	private $tables_relational = array("diet/food"=> "diet_food" , "food/location"=> "food_location", "user/diet"=> "user_diet");
+	private $OBJECTIVEMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
+	private $FOODMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
+	private $DIETMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
+	private $USERMAP = ['GET' => 'search' , 'POST' => 'validate_login' , 'PUT' => 'update', 'DELETE' => 'remove'];
+	private $CATEGORYMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
+	private $LOCATIONMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
+	private $WORKSHOPMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 
 
 
 	
 	
 	public function treat_request($request) {
-		return $this->{$this->METHODMAP[$request->getMethod()]}($request);
+		/*if($request->getMethod() == "GET" && self::resource_combo($request) == "combobox_alimentos")
+		{
+			return $this->combobox_alimentos($request);
+		}*/
+		if(empty($request->getResource())){
+			return "This Page isn't. Sorry!";
+		}
+		return $this->{$this->RESOURCEMAP[$request->getResource2()]}($request);
+		//return $this->{$this->METHODMAP[$request->getMethod()]}($request);
 	
 	}
-
-	private function search($request) {
-		$table="";
-		$tablename="";
-
+	
+	function control_user($request)
+	{
+		return $this->{$this->USERMAP[$request->getMethod()]}($request);
+	}
+	
+	function control_diet($request)
+	{
+		return $this->{$this->DIETMAP[$request->getMethod()]}($request);
+	}
+	
+	function control_food($request)
+	{
 		$path = $request->getResource();
 		$resource = explode("/", $path);
+		//var_dump($resource[1]);
+		/*if($resource[1] == 'combobox_alimentos'){
+			self::combobox_alimentos($request);
+		}*/
+		return $this->{$this->FOODMAP[$request->getMethod()]}($request);
+	}
+	
+	function control_objective($request)
+	{
+		return $this->{$this->OBJECTIVEMAP[$request->getMethod()]}($request);
+	}
+	function control_location($request)
+	{
+		return $this->{$this->LOCATIONMAP[$request->getMethod()]}($request);
+	}
+	
+	function control_category($request)
+	{
+		return $this->{$this->CATEGORYMAP[$request->getMethod()]}($request);
+	}
 
-		foreach($resource as $result){
-		$table .= $result. ' JOIN ';
-		$tablename = substr($table,0,-6);
-		}
-		
 
-		
-		$tablename .= self::select_relation($request);
+	private function search($request) {
+		$tablename = self::joins($request);
 
-		
 		if(empty($request->getParameters())){
  				$query = 'SELECT * FROM '.$tablename.';';
 				return self::select($query);
  		}else{
 		$query = 'SELECT * FROM '.$tablename.' WHERE '.self::queryParamsGet($request->getParameters()). ';';
-		
 		return self::select($query); 
 		}
 	}
 	
 	public function select($query){
 		$result = (new DBConnector())->query($query);
-		var_dump($query);
-		return $result->fetchAll(PDO::FETCH_OBJ);
+		//var_dump($query);
+		return $result->fetchAll(PDO::FETCH_ASSOC);
 
 	}
 
@@ -69,19 +105,36 @@ class ResourceController
 		
 		$query = "";		
 		foreach($params as $key => $value) {
-			$query .= $key." = ".$value." AND ";	
+			$query .= $key.' = '.$value.' AND ';				
 		}
 		$query = substr($query,0,-5);
 		return $query;
 	
+	}
+	private function joins($request){
+		$table="";
+		$tablename="";
+
+		$path = $request->getResource();
+		$resource = explode("/", $path);
+
+
+		foreach($resource as $result){
+		$table .= $result. ' JOIN ';
+		$tablename = substr($table,0,-6);
+		}
+		
+
+		
+		return $tablename .= self::select_relation($request);
+
 	}
 	
 	
 
 private function create($request) {
 		$body = $request->getBody();
-		//var_dump($body);
-		$resource = $request->getResource();
+		$resource = $request->getResource2();
 		$query = 'INSERT INTO '.$resource.' ('.$this->getColumns($body).') VALUES ('.$this->getValues($body).')';
 		return self::execution_query($query);
 		 
@@ -92,9 +145,7 @@ private function create($request) {
 	private function update($request) {
                 $body = $request->getBody();
                 $resource = $request->getResource();
-                $query = 'UPDATE '.$resource.' SET '. $this->getUpdateCriteria($body);
-                //var_dump($query);
-		//die();
+                $query = 'UPDATE '.$resource2.' SET '. $this->getUpdateCriteria($body);
 		return self::execution_query($query);
         }
 	
@@ -106,7 +157,7 @@ private function create($request) {
     			echo '
     <script>
         alert("Sucesso!");
-        window.location.href = "login.html";
+        window.location.href = "login.php";
     </script>
 ';
 		} else {
@@ -160,15 +211,26 @@ private function create($request) {
                 $string = implode("','", $values);
 		return "'".$string."'";
         
-        }
-
+    }
+	
+	private function validate_post($request)
+	{
+		$path = $_SERVER['REQUEST_URI'];
+		$resource = explode("/", $path);		
+			if($resource[3] == "validate_login"){
+				self::validate_login($request);
+			}else{
+				self::create($request);
+			}			
+		
+	}
+	
 	private function validate_login($request)
-	{        
+	{
 		$body = $request->getBody();
-		$SQL='SELECT id, nme_user, num_password, admin FROM user WHERE '.$this->getFormsLogin($body);			
+		$SQL='SELECT * FROM user WHERE '.$this->getFormsLogin($body);
+	
 		return self::login_query($SQL);
-
-
 	}
 
 	private function getFormsLogin($json)
@@ -177,6 +239,7 @@ private function create($request) {
 		$SQL = "";
 		foreach($array as $key => $value) {
 		$SQL .= $key.' = '."'".$value."'".' AND ';
+		
 		}
 		$SQL = substr($SQL,0,-5);
 		
@@ -184,28 +247,65 @@ private function create($request) {
 	}
 
 	private function login_query($query) {
-		session_start();
 		$conn = (new DBConnector())->prepare($query);
 		$conn->execute();
 		if ($conn->rowCount() > 0) {
-		//$_SESSION['id']= $query['id']; 
-		//$_SESSION['nme_user'] = stripslashes($query['nme_user']); 
 		echo '<script>
 		alert("Sucesso!");
-		window.location.href = "../../Client_Diet/page.html";
+		window.location.href = "../../Client_Diet/home.php";
 	    		</script>';
 	
 		}else{
 		echo     '<script>
 		alert("Senha ou login inválido!");
-		window.location.href = "../../Client_Diet/login.html";
+		window.location.href = "../../Client_Diet/login.php";
 	    		</script>';
 		} 
 		
 	}
-		
-	
 
-	
+
+	private function resource_combo($request){
+		$path = $request->getResource();
+		$s = explode("?", $path);
+        $r = explode("/", $s[0]);
+
+        return $this->operation = $r[2];
+	}
+
+
+
+	private function combobox_alimentos($request){	
+	$query= 'SELECT food, calories, category, food.id FROM food JOIN category'.' WHERE '.self::queryParamsGet($request->getParameters());
+	return $result = self::select($query);
+	}
+
+	private function joins_combox_alimentos($request){
+		$table = "";
+		$tablename="";
+		$path = $request->getResource();
+		$s = explode("?", $path);
+		$r = explode("/", $s[0]);
+
+		$tablename = $r[0].' JOIN '.$r[1];		
+		return $tablename;
+
+	}
+
+	/*
+	function table_diet(){																		
+	$query= "SELECT cod_user, cod_diet, weight, height, dat_init, dat_final, ideal_weight FROM `user_diet` join user join diet WHERE cod_user=user.id and cod_diet=diet.id and user='higo soares'";
+	$conn1 = $conn->query($query);
+	var_dump($values = $conn1->fetchAll(PDO::FETCH_ASSOC));	
+	foreach ($values as $value => $key) {
+	}
+	$query2= 'SELECT cod_diet, cod_food, schedule, objective, food, calories, amount FROM `diet_food` join diet join objective join food WHERE cod_diet=1 and cod_food=food.id and cod_objective=objective.id';
+	$conn2 = $conn->query($query2);
+	$values2 = $conn2->fetchAll(PDO::FETCH_ASSOC);
+
+	foreach($values2 as $value2 => $key2){
+		echo '<tr> <th scope="row">'.$key2['schedule'].'</th> <td>'.$key2['food'].'</td> <td>'.$key2['amount'].'</td> </tr>';
+	}
+	}	*/
 }
 ?>

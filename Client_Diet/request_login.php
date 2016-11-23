@@ -13,7 +13,7 @@ $response = \Httpful\Request::post($post_login)
 ->body(json_encode($_POST))
 ->send();
 
-echo  $response->body;
+echo $response->body;
 
 
 }

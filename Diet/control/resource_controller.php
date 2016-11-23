@@ -7,7 +7,7 @@ include_once ('./db/db_manager.php');
 class ResourceController
 {	
 	private $RESOURCEMAP = ['user' => 'control_user', 'diet' => 'control_diet', 'food' => 'control_food', 'objective' => 'control_objective', 'location' => 'control_location', 'category' => 'control_category', 'index.php' => 'index'];
-	private $tables_relational = array("diet/food"=> "diet_food" , "food/location"=> "food_location", "user/diet"=> "user_diet");
+	private $tables_relational = array("diet/food"=> "diet_food" , "food/location"=> "food_location", "user/diet"=> "user_diet", "diet/food/objective" => "diet_food", "diet/food/objective/category" => "diet_food");
 	private $OBJECTIVEMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $FOODMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $DIETMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
@@ -21,16 +21,12 @@ class ResourceController
 	
 	
 	public function treat_request($request) {
-		/*if($request->getMethod() == "GET" && self::resource_combo($request) == "combobox_alimentos")
-		{
-			return $this->combobox_alimentos($request);
-		}*/
+
 		if(empty($request->getResource())){
 			return "This Page isn't. Sorry!";
+
 		}
-		return $this->{$this->RESOURCEMAP[$request->getResource2()]}($request);
-		//return $this->{$this->METHODMAP[$request->getMethod()]}($request);
-	
+		return $this->{$this->RESOURCEMAP[$request->getResource2()]}($request);	
 	}
 	
 	function control_user($request)
@@ -45,12 +41,7 @@ class ResourceController
 	
 	function control_food($request)
 	{
-		$path = $request->getResource();
-		$resource = explode("/", $path);
-		//var_dump($resource[1]);
-		/*if($resource[1] == 'combobox_alimentos'){
-			self::combobox_alimentos($request);
-		}*/
+		
 		return $this->{$this->FOODMAP[$request->getMethod()]}($request);
 	}
 	
@@ -274,7 +265,7 @@ private function create($request) {
 	}
 
 
-
+	/*
 	private function combobox_alimentos($request){	
 	$query= 'SELECT food, calories, category, food.id FROM food JOIN category'.' WHERE '.self::queryParamsGet($request->getParameters());
 	return $result = self::select($query);
@@ -290,7 +281,7 @@ private function create($request) {
 		$tablename = $r[0].' JOIN '.$r[1];		
 		return $tablename;
 
-	}
+	}*/
 
 	/*
 	function table_diet(){																		

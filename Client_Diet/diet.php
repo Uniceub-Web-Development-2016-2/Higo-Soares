@@ -103,27 +103,20 @@
 						
 						<div class="tab-content">
 							<div class="tab-pane fade active in" id="pilltab1">
-								<table class="table"> 
-								<thead> 
-								<tr> <th>Horário</th> <th>Alimentos</th> <th>Quantidade</th> </tr> 
-								</thead> 
-								<tbody> 
 								<?php
-								//$diet = (new FunctionsDiet())->diet();
+								diet();
 								?>
-								</tbody> 
-								</table>
 							</div>
 							<div class="tab-pane fade" id="pilltab2">
 								<div class="col-md-6">
 							
 								<div class="form-group">
 								<?php
-								combo_alimentos();								
+								combo_foods();								
 								?>
 								</div>
 								<?php								
-								combo_objetivo();
+								combo_objective();
 								?>
 								<button type="submit" class="btn btn-primary">Confirmar</button>
 								<button type="reset" class="btn btn-default">Cancelar</button>

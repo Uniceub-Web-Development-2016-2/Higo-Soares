@@ -13,12 +13,33 @@ $response = \Httpful\Request::post($post_login)
 ->body(json_encode($_POST))
 ->send();
 
-echo $response->body;
+$array = json_decode($response->body, true);
+
+if(empty($array)){
+   	echo     '<script>
+		alert("Senha ou login inválido!");
+		window.location.href = "../../Client_Diet/login.php";
+	    		</script>';
+}
+else{
+foreach ($array as $value => $key){
+	$id = $key['id'];
+}
+	$_SESSION['id'] = $id;
+	echo '<script>
+		alert("Sucesso!");
+		window.location.href = "../../Client_Diet/home.php";
+	    		</script>';
+
+}
 
 
 }
 else{
-	echo "Você deve digitar o nome e senha!";
+	   	echo     '<script>
+		alert("Você deve digitar o nome e senha!");
+		window.location.href = "../../Client_Diet/login.php";
+	    		</script>';
 }
 
 

@@ -11,6 +11,8 @@
     <link rel="icon" href="fonts/favicon.ico">
 
     <title>Cadastre-se</title>
+    <script type="text/javascript" src="js/jquery-1.2.6.pack.js"></script>
+    <script type="text/javascript">$(document).ready(function(){  $("#cpf").mask("999.999.999-99");});</script>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -65,7 +67,7 @@
     <div class="form-group">
     <label for="inputEmail3" class="col-sm-4 control-label">CPF</label>
     <div class="col-sm-4">
-      <input type="text" name="cpf" required="required" maxlength="11" class="form-control form-control-login" id="inputEmail3" placeholder="cpf" pattern="[0-9]+$">
+      <input id="cpf" type="text" name="cpf" required="required" maxlength="11" class="form-control form-control-login" placeholder="cpf" >
     </div>
   </div>
     <div class="form-group">
@@ -128,5 +130,6 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript" src="js/jquery.maskedinput-1.1.4.pack.js"></script>
   </body>
 </html>

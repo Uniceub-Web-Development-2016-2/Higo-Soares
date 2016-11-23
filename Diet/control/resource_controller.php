@@ -220,8 +220,7 @@ private function create($request) {
 	{
 		$body = $request->getBody();
 		$SQL='SELECT * FROM user WHERE '.$this->getFormsLogin($body);
-	
-		return self::login_query($SQL);
+		return self::select($SQL);
 	}
 
 	private function getFormsLogin($json)
@@ -236,25 +235,6 @@ private function create($request) {
 		
 		return $SQL;
 	}
-
-	private function login_query($query) {
-		$conn = (new DBConnector())->prepare($query);
-		$conn->execute();
-		if ($conn->rowCount() > 0) {
-		echo '<script>
-		alert("Sucesso!");
-		window.location.href = "../../Client_Diet/home.php";
-	    		</script>';
-	
-		}else{
-		echo     '<script>
-		alert("Senha ou login inválido!");
-		window.location.href = "../../Client_Diet/login.php";
-	    		</script>';
-		} 
-		
-	}
-
 
 	private function resource_combo($request){
 		$path = $request->getResource();

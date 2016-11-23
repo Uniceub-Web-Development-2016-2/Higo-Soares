@@ -46,8 +46,8 @@ include('httpful.phar');
 	
 	function diet(){
 	$logado = $_SESSION['user'];
-	//$id = $_SESSION['id'];
-	$get_request = 'http://localhost/Diet/user/diet?cod_user=user.id&cod_diet=diet.id&1=user.id';
+	$id = $_SESSION['id'];
+	$get_request = 'http://localhost/Diet/user/diet?cod_user=user.id&cod_diet=diet.id&'.$id.'=user.id';
 
 	$response = \Httpful\Request::get($get_request)->send();
 
@@ -82,6 +82,75 @@ include('httpful.phar');
 			</table>';
 
 	}
+
+	function profile(){
+	$logado = $_SESSION['user'];
+	$id = $_SESSION['id'];
+	$get_request = 'http://localhost/Diet/user?id='.$id;
+
+	$response = \Httpful\Request::get($get_request)->send();
+
+	$array = json_decode($response->body, true);
+
+	foreach ($array as $value => $key) {
+	echo '  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Nome</label>
+    <div class="col-sm-2">
+      <input name="user" required="required" class="form-control form-control-login" id="inputEmail3" value="'.$key['user'].'" pattern="[a-z\s]+$" type="text">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Password</label>
+    <div class="col-sm-2">
+      <input name="password" required="required" class="form-control form-control-login" id="inputEmail3"  value="'.$key['password'].'" type="password">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">CPF</label>
+    <div class="col-sm-2">
+      <input id="cpf" name="cpf" required="required" maxlength="11" class="form-control form-control-login" value="'.$key['cpf'].'" type="text">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">E-mail</label>
+    <div class="col-sm-2">
+      <input name="email" required="required" class="form-control form-control-login" id="inputEmail3" value="'.$key['email'].'" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Telefone</label>
+    <div class="col-sm-2">
+      <input name="phone" required="required" maxlength="13" class="form-control form-control-login" id="inputEmail3" value="'.$key['phone'].'" type="text">
+	  <!-- pattern="\([0-9]{2}\)[0-9]{4,6}-[0-9]{3,4}$" -->
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Peso</label>
+    <div class="col-sm-2">
+      <input name="weight" required="required" class="form-control form-control-login" id="inputEmail3" value="'.$key['weight'].'" type="text">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Altura</label>
+    <div class="col-sm-2">
+      <input name="height" required="required" class="form-control form-control-login" id="inputEmail3" value="'.$key['height'].'" type="text">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-4 control-label">Idade</label>
+    <div class="col-sm-2">
+      <input name="age" required="required" maxlength="3" class="form-control" id="inputPassword3" value="'.$key['age'].'" pattern="[0-9]+$" type="number">
+	  <input name="active" value="1" type="hidden">
+	  
+    </div>
+  </div>';
+	}
+	}
+
+
+
+
+
 
 
 ?>

@@ -9,9 +9,9 @@ include('httpful.phar');
 	$response = \Httpful\Request::get($get_request)->send();
 	$array = json_decode($response->body, true);
 	foreach ($array as $value => $key) {
-		
+
 	echo '<div class="checkbox"><label>
-	<input type="checkbox" value="food.id">'.$key['food'].' - '.$key['calories'].'Kcal'.' - '.$key['category'].'</label>
+	<input name="food" type="checkbox" value="'.$key['id'].'">'.$key['food'].' - '.$key['calories'].'Kcal'.' - '.$key['category'].'</label>
 	</div>';	
 	}
 	}
@@ -24,12 +24,12 @@ include('httpful.phar');
 	$array = json_decode($response->body, true);
 	
 	echo '<div class="form-group">
-	<label>Objetivo</label>
-	<select class="form-control">';
+	<label class="col-sm-4 control-label">Objetivo</label><div class="col-sm-6">
+	<select name="objective" class="form-control">';
 	foreach ($array as $value => $key) {
-	echo '<option value="objective.id">'.$key['objective'].'</option>';
+	echo '<option value="'.$key['id'].'">'.$key['objective'].'</option>';
 	}
-	echo '</select></div>';
+	echo '</select></div></div>';
 	}
 	
 	function table_foods(){
@@ -58,7 +58,7 @@ include('httpful.phar');
     $cod_diet="";
 	foreach ($array as $value => $key) {
 		$cod_diet = $key['cod_diet'];
-		echo '<p>Minhas informações '.'</br>'. 'Seu peso: '.$key['weight'].'</br>'.'Seu peso ideal: '.$key['ideal_weight'].'</br>'.'Data inicial da dieta: '.$key['dat_init'].'</br>'.'Data final da dieta: '.$key['dat_final'].'</br>'.'</p>';
+		echo '<p>Minhas informações '.'</br>'. 'Seu peso: '.$key['weight'].'kg'.'</br>'.'Seu peso ideal: '.$key['ideal_weight'].'kg'.'</br>'.'Data inicial da dieta: '.$key['dat_init'].'</br>'.'Data final da dieta: '.$key['dat_final'].'</br>'.'</p>';
 	}
 	echo '</div>';
 	

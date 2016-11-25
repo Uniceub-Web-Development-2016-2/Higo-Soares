@@ -108,18 +108,39 @@
 								?>
 							</div>
 							<div class="tab-pane fade" id="pilltab2">
-								<div class="col-md-6">
+								<div class="col-md-8">
+
+								<form action="teste.php" class="form-horizontal">			
+							    <div class="form-group">
+							    <label class="col-sm-4 control-label">Data Inicial</label>
+							    <div class="col-sm-4">
+							    <input type="date" name="dat_init" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
+							    </div>
+							  	</div>
+							    <div class="form-group">
+							    <label for="inputEmail3" class="col-sm-4 control-label">Data Final</label>
+							    <div class="col-sm-4">
+							    <input type="date" name="dat_final" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
+							    </div>
+							  	</div>
+								<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-4 control-label">Peso Ideal</label>
+							    <div class="col-sm-3">
+							    <input type="text" name="ideal_weight" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
+							    </div>
+							  	</div>
+							  	<?php combo_objective(); ?>
+								</form>			
 							
 								<div class="form-group">
+								<form action="teste.php" method="post">
 								<?php
 								combo_foods();								
 								?>
 								</div>
-								<?php								
-								combo_objective();
-								?>
 								<button type="submit" class="btn btn-primary">Confirmar</button>
 								<button type="reset" class="btn btn-default">Cancelar</button>
+								</form>
 							</div>
 							</div>
 							<div class="tab-pane fade" id="pilltab3">

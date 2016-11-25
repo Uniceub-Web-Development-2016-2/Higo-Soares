@@ -1,8 +1,0 @@
-SELECT cod_user, cod_diet, weight, height, dat_init, dat_final, ideal_weight FROM `user_diet` join user join diet WHERE cod_user=user.id and cod_diet=diet.id and user='higo soares';
-SELECT cod_diet, cod_food, schedule, objective, food, calories, weight FROM `diet_food` join diet join objective join food WHERE cod_diet=diet.id and cod_food=food.id and cod_objective=objective.id;
-
-
-
-
-<tr> <th scope="row">2</th> <td>Jacob</td> <td>Thornton</td> <td>@fat</td> </tr> <tr> <th scope="row">3</th> <td>Larry</td> <td>the Bird</td> <td>@twitter</td> </tr>
-

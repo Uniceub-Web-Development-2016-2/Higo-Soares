@@ -3,19 +3,7 @@ include('httpful.phar');
 
 
 	
-	function combo_foods(){
-	$get_request = 'http://localhost/Diet/food/category?cod_category=category.id';
 
-	$response = \Httpful\Request::get($get_request)->send();
-	$array = json_decode($response->body, true);
-	foreach ($array as $value => $key) {
-
-	echo '<div class="checkbox"><label>
-	<input name="food" type="checkbox" value="'.$key['id'].'">'.$key['food'].' - '.$key['calories'].'Kcal'.' - '.$key['category'].'</label>
-	</div>';	
-	}
-	}
-	
 	function combo_objective(){
 	$get_request = 'http://localhost/Diet/objective';
 
@@ -158,12 +146,49 @@ include('httpful.phar');
 	echo '<div class="form-group">
 	<label class="col-sm-4 control-label">Categoria</label><div class="col-sm-6">
 	<select name="category" class="form-control">';
+	$id_category="";
 	foreach ($array as $value => $key) {
+		$id_category=$key['id'];
 	echo '<option id="novaCategoria" value="'.$key['id'].'">'.$key['category'].'</option>';
 	}
 	echo '</select></div></div>';
 
 
+	}
+
+	function combo_foods($id){
+	$url = 'http://localhost/Diet/food?cod_category=category.id&'.$id.'=category.id'; 
+
+	$response2 = \Httpful\Request::get($url)->send();
+	$array2 = json_decode($response2->body, true);
+	foreach ($array2 as $value2 => $key2) {
+	echo '<div id="foods" class="form-group"><label class="col-sm-4 control-label" >Alimentos</label><div class="col-sm-6">
+	<input name="food" type="checkbox" value="'.$key2['id'].'">'.$key2['food'].' - '.$key2['calories'].'Kcal'.'
+	</div></div>';	
+	}
+	}
+
+	function newDiet(){
+		combo_objective();
+	$url = 'http://localhost/Diet/category';
+
+	$response = \Httpful\Request::get($url)->send();
+
+	$array = json_decode($response->body, true);
+
+	echo '<div class="form-group">
+	<label class="col-sm-4 control-label">Categoria</label><div class="col-sm-6">
+	<select name="category" class="form-control">';
+	$id_category="";
+	foreach ($array as $value => $key) {
+		$id_category=$key['id'];
+	echo '<option id="novaCategoria" value="'.$key['id'].'">'.$key['category'].'</option>';
+	}
+	echo '</select></div></div>';
+
+	combo_foods($id_category);
+
+	
 	}
 
 

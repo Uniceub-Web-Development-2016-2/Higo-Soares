@@ -21,12 +21,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>$(document).ready(function() {
       $("#novaCategoria").click(function() {
-      var novoItem = $("#div").clone().removeAttr('id'); // para não ter id duplicado
+      var novoItem = $("#foods").clone().removeAttr('id'); // para não ter id duplicado
       novoItem.children('input').val(''); //limpa o campo quantidade
       $("#novaDieta").append(novoItem);
     });
   });
   </script>
+<script></script>
 <!--Icons-->
 <script src="js/lumino.glyphs.js"></script>
 
@@ -125,7 +126,7 @@
 							    <input type="date" name="dat_init" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
 							    </div>
 							  	</div>
-							    <div id="div" class="form-group">
+							    <div class="form-group">
 							    <label for="inputEmail3" class="col-sm-4 control-label">Data Final</label>
 							    <div class="col-sm-4">
 							    <input type="date" name="dat_final" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
@@ -137,14 +138,9 @@
 							    <input type="text" name="ideal_weight" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
 							    </div>
 							  	</div>
-							  	<?php combo_objective(); 
-							  	combo_category();
-							  	?>						
-								<div class="form-group">
-								<?php
-								//combo_foods();								
-								?>
-								</div>
+							  	<?php newDiet();
+							  	?>
+							  	<div class="col-md-4"></div>						
 								<button type="submit" class="btn btn-primary">Confirmar</button>
 								<button type="reset" class="btn btn-default">Cancelar</button>
 								</form>

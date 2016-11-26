@@ -9,7 +9,7 @@ class ResourceController
 	private $RESOURCEMAP = ['user' => 'control_user', 'diet' => 'control_diet', 'food' => 'control_food', 'objective' => 'control_objective', 'location' => 'control_location', 'category' => 'control_category', 'index.php' => 'index'];
 	private $tables_relational = array("diet/food"=> "diet_food" , "food/location"=> "food_location", "user/diet"=> "user_diet", "diet/food/objective" => "diet_food", "diet/food/objective/category" => "diet_food");
 	private $OBJECTIVEMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
-	private $FOODMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
+	private $FOODMAP = ['GET' => 'search_food_category' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $DIETMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $USERMAP = ['GET' => 'search' , 'POST' => 'validate_post' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $CATEGORYMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
@@ -231,6 +231,18 @@ private function create($request) {
         $r = explode("/", $s[0]);
 
         return $this->operation = $r[2];
+	}
+
+
+	private function search_food_category($request) {
+		$resource = $request->getResource2();
+		if(empty($request->getParameters())){
+ 				$query = 'SELECT * FROM '.$resource.';';
+				return self::select($query);
+ 		}else{
+		$query = 'SELECT food.id, food, calories, category FROM '.$resource.' JOIN category WHERE '.self::queryParamsGet($request->getParameters()). ';';
+		return self::select($query); 
+		}
 	}
 
 }

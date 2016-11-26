@@ -6,7 +6,7 @@ include_once ('./db/db_manager.php');
 
 class ResourceController
 {	
-	private $RESOURCEMAP = ['user' => 'control_user', 'diet' => 'control_diet', 'food' => 'control_food', 'objective' => 'control_objective', 'location' => 'control_location', 'category' => 'control_category', 'index.php' => 'index'];
+	private $RESOURCEMAP = ['user' => 'control_user', 'diet' => 'control_diet', 'food' => 'control_food', 'objective' => 'control_objective', 'location' => 'control_location', 'category' => 'control_category', 'diet_food' => 'control_diet_food', 'user_diet' => 'control_user_diet','index.php' => 'index'];
 	private $tables_relational = array("diet/food"=> "diet_food" , "food/location"=> "food_location", "user/diet"=> "user_diet", "diet/food/objective" => "diet_food", "diet/food/objective/category" => "diet_food");
 	private $OBJECTIVEMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $FOODMAP = ['GET' => 'search_food_category' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
@@ -14,7 +14,8 @@ class ResourceController
 	private $USERMAP = ['GET' => 'search' , 'POST' => 'validate_post' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $CATEGORYMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $LOCATIONMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
-	private $WORKSHOPMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
+	private $USER_DIETMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
+	private $DIET_FOODMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 
 
 
@@ -57,6 +58,14 @@ class ResourceController
 	function control_category($request)
 	{
 		return $this->{$this->CATEGORYMAP[$request->getMethod()]}($request);
+	}
+		function control_diet_food($request)
+	{
+		return $this->{$this->DIET_FOODMAP[$request->getMethod()]}($request);
+	}
+			function control_user_diet($request)
+	{
+		return $this->{$this->USER_DIETMAP[$request->getMethod()]}($request);
 	}
 
 

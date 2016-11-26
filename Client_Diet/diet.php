@@ -27,7 +27,12 @@
     });
   });
   </script>
-<script></script>
+<script>function Mudarestado(el) {
+    var display = document.getElementById(el).style.display;
+    if(display == "none")
+        document.getElementById(el).style.display = 'block';
+
+}</script>
 <!--Icons-->
 <script src="js/lumino.glyphs.js"></script>
 
@@ -119,31 +124,43 @@
 							<div class="tab-pane fade" id="pilltab2">
 								<div class="col-md-8">
 
-								<form action="teste.php" method="post" id="novaDieta"class="form-horizontal">			
-							    <div class="form-group">
-							    <label class="col-sm-4 control-label">Data Inicial</label>
-							    <div class="col-sm-4">
-							    <input type="date" name="dat_init" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
-							    </div>
-							  	</div>
-							    <div class="form-group">
-							    <label for="inputEmail3" class="col-sm-4 control-label">Data Final</label>
-							    <div class="col-sm-4">
-							    <input type="date" name="dat_final" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
-							    </div>
-							  	</div>
-								<div class="form-group">
-							    <label for="inputEmail3" class="col-sm-4 control-label">Peso Ideal</label>
-							    <div class="col-sm-3">
-							    <input type="text" name="ideal_weight" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
-							    </div>
-							  	</div>
+								<form action="teste.php" method="post" id="novaDieta" class="form-horizontal">			
 							  	<?php newDiet();
 							  	?>
+							  	<nav aria-label="...">
+								  <ul class="pager">
+								    <li class=""><a href="#">Previous</a></li>
+								    <li class="" onclick="Mudarestado('next1')"><a href="#next1">Next</a></li>
+								  </ul>
+
+								<div class="form-group" id="next1" style="display :none;">
+								<?php
+								newDiet2();
+								?>
+
+								<nav aria-label="...">
+								  <ul class="pager">
+								    <li class=""><a href="#">Previous</a></li>
+								    <li class="" onclick="Mudarestado('next2')"><a href="#next2">Next</a></li>
+								  </ul>
+
+								<div class="form-group" id="next" style="display :none;">
+								<p>certo</p>
+								</div> 	
+
+
+								</nav>
+
+								</div> 
+
+
+								</nav>
+
+							  	</form>
+
 							  	<div class="col-md-4"></div>						
-								<button type="submit" class="btn btn-primary">Confirmar</button>
-								<button type="reset" class="btn btn-default">Cancelar</button>
-								</form>
+								<!-- <button type="submit" class="btn btn-primary">Confirmar</button>
+								<button type="reset" class="btn btn-default">Cancelar</button> -->
 							</div>
 							</div>
 							<div class="tab-pane fade" id="pilltab3">

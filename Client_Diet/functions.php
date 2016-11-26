@@ -162,14 +162,17 @@ include('httpful.phar');
 	$response2 = \Httpful\Request::get($url)->send();
 	$array2 = json_decode($response2->body, true);
 	foreach ($array2 as $value2 => $key2) {
-	echo '<div id="foods" class="form-group"><label class="col-sm-4 control-label" >Alimentos</label><div class="col-sm-6">
+	echo '<div id="foods" class="form-group"><label class="col-sm-4 control-label" >Alimento</label><div class="col-sm-6">
 	<input name="food" type="checkbox" value="'.$key2['id'].'">'.$key2['food'].' - '.$key2['calories'].'Kcal'.'
-	</div></div>';	
+	</div></div>';
+
+	amount($key2['id']);
+	
 	}
 	}
 
-	function newDiet(){
-		combo_objective();
+	function newDiet2(){
+
 	$url = 'http://localhost/Diet/category';
 
 	$response = \Httpful\Request::get($url)->send();
@@ -184,16 +187,70 @@ include('httpful.phar');
 		$id_category=$key['id'];
 	echo '<option id="novaCategoria" value="'.$key['id'].'">'.$key['category'].'</option>';
 	}
+
 	echo '</select></div></div>';
 
 	combo_foods($id_category);
 
+
 	
 	}
 
+	function amount($id){
+	echo '<div class="form-group">
+	<label for="inputEmail3" class="col-sm-4 control-label">Quantidade</label>
+	<div class="col-sm-3">
+	<input type="text" name="amount" required="required" maxlength="5" class="form-control form-control-login" placeholder="" >
+	</div>
+	</div>
+	<div class="form-group">
+	<label for="inputEmail3" class="col-sm-4 control-label">Horário</label>
+	<div class="col-sm-3">
+	<input type="time" name="schedule" required="required" class="form-control form-control-login" placeholder="" >
+	</div>
+	</div>';
+
+	$url = 'http://localhost/Diet/diet_food/create';
+
+	$response = \Httpful\Request::post($url)
+	->sendsJson()
+	->body(json_encode($_POST))
+	->send();
+	
+	}
+
+	function newDiet(){
+		echo '<div class="form-group">
+	<label class="col-sm-4 control-label">Data Inicial</label>
+	<div class="col-sm-4">
+	<input type="date" name="dat_init" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
+	</div>
+	 </div>
+	<div class="form-group">
+	<label for="inputEmail3" class="col-sm-4 control-label">Data Final</label>
+	 <div class="col-sm-4">
+	<input type="date" name="dat_final" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
+		</div>
+	</div>
+	<div class="form-group">
+	<label for="inputEmail3" class="col-sm-4 control-label">Peso Ideal</label>
+	<div class="col-sm-3">
+	<input type="text" name="ideal_weight" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
+			    </div>
+	</div>';
 
 
+	$url = 'http://localhost/Diet/diet/create';
 
+	$response = \Httpful\Request::post($url)
+	->sendsJson()
+	->body(json_encode($_POST))
+	->send();
+
+	combo_objective();
+
+
+}
 
 
 

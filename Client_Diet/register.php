@@ -51,7 +51,7 @@
             </div>
           </div>
 
-<form action="requests.php" method="post" class="form-horizontal">
+<form action="create_user.php" method="post" class="form-horizontal">
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-4 control-label">Nome</label>
     <div class="col-sm-4">

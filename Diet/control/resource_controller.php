@@ -11,7 +11,7 @@ class ResourceController
 	private $OBJECTIVEMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $FOODMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $DIETMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
-	private $USERMAP = ['GET' => 'search' , 'POST' => 'validate_login' , 'PUT' => 'update', 'DELETE' => 'remove'];
+	private $USERMAP = ['GET' => 'search' , 'POST' => 'validate_post' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $CATEGORYMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $LOCATIONMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
 	private $WORKSHOPMAP = ['GET' => 'search' , 'POST' => 'create' , 'PUT' => 'update', 'DELETE' => 'remove'];
@@ -74,7 +74,7 @@ class ResourceController
 	
 	public function select($query){
 		$result = (new DBConnector())->query($query);
-		//var_dump($query);
+	
 		return $result->fetchAll(PDO::FETCH_ASSOC);
 
 	}
@@ -142,18 +142,7 @@ private function create($request) {
 	
 	
 	private function execution_query($query) {
-		$conn = (new DBConnector())->prepare($query);
-		$conn->execute();
-		if ($conn->rowCount() > 0) {
-    			echo '
-    <script>
-        alert("Sucesso!");
-        window.location.href = "login.php";
-    </script>
-';
-		} else {
-    			echo "Error: " . $query . "<br>";
-		}
+		return $conn = (new DBConnector())->query($query);
 	}
 	
 		
@@ -176,7 +165,7 @@ private function create($request) {
 		$where = " WHERE ";
 		$array = json_decode($json, true);
 		foreach($array as $key => $value) {
-		var_dump($key);
+
 			if($key != 'id')
 				$criteria .= $key." = '".$value."',";
 			
@@ -209,9 +198,9 @@ private function create($request) {
 		$path = $_SERVER['REQUEST_URI'];
 		$resource = explode("/", $path);		
 			if($resource[3] == "validate_login"){
-				self::validate_login($request);
+				return self::validate_login($request);
 			}else{
-				self::create($request);
+				return self::create($request);
 			}			
 		
 	}
@@ -244,39 +233,5 @@ private function create($request) {
         return $this->operation = $r[2];
 	}
 
-
-	/*
-	private function combobox_alimentos($request){	
-	$query= 'SELECT food, calories, category, food.id FROM food JOIN category'.' WHERE '.self::queryParamsGet($request->getParameters());
-	return $result = self::select($query);
-	}
-
-	private function joins_combox_alimentos($request){
-		$table = "";
-		$tablename="";
-		$path = $request->getResource();
-		$s = explode("?", $path);
-		$r = explode("/", $s[0]);
-
-		$tablename = $r[0].' JOIN '.$r[1];		
-		return $tablename;
-
-	}*/
-
-	/*
-	function table_diet(){																		
-	$query= "SELECT cod_user, cod_diet, weight, height, dat_init, dat_final, ideal_weight FROM `user_diet` join user join diet WHERE cod_user=user.id and cod_diet=diet.id and user='higo soares'";
-	$conn1 = $conn->query($query);
-	var_dump($values = $conn1->fetchAll(PDO::FETCH_ASSOC));	
-	foreach ($values as $value => $key) {
-	}
-	$query2= 'SELECT cod_diet, cod_food, schedule, objective, food, calories, amount FROM `diet_food` join diet join objective join food WHERE cod_diet=1 and cod_food=food.id and cod_objective=objective.id';
-	$conn2 = $conn->query($query2);
-	$values2 = $conn2->fetchAll(PDO::FETCH_ASSOC);
-
-	foreach($values2 as $value2 => $key2){
-		echo '<tr> <th scope="row">'.$key2['schedule'].'</th> <td>'.$key2['food'].'</td> <td>'.$key2['amount'].'</td> </tr>';
-	}
-	}	*/
 }
 ?>

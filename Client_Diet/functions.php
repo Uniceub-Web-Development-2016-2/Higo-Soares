@@ -96,7 +96,7 @@ include('httpful.phar');
 	echo '  <div class="form-group">
     <label for="inputEmail3" class="col-sm-4 control-label">Nome</label>
     <div class="col-sm-2">
-      <input name="user" required="required" class="form-control form-control-login" id="inputEmail3" value="'.$key['user'].'" pattern="[a-z\s]+$" type="text">
+      <input name="user" required="required" class="form-control form-control-login" id="inputEmail3" value="'.$key['user'].'" type="text">
     </div>
   </div>
     <div class="form-group">
@@ -141,10 +141,29 @@ include('httpful.phar');
     <div class="col-sm-2">
       <input name="age" required="required" maxlength="3" class="form-control" id="inputPassword3" value="'.$key['age'].'" pattern="[0-9]+$" type="number">
 	  <input name="active" value="1" type="hidden">
+	  <input type="hidden" name="id" value="'.$id.'">
 	  
     </div>
   </div>';
 	}
+	}
+
+	function combo_category(){
+	$url = 'http://localhost/Diet/category';
+
+	$response = \Httpful\Request::get($url)->send();
+
+	$array = json_decode($response->body, true);
+
+	echo '<div class="form-group">
+	<label class="col-sm-4 control-label">Categoria</label><div class="col-sm-6">
+	<select name="category" class="form-control">';
+	foreach ($array as $value => $key) {
+	echo '<option id="novaCategoria" value="'.$key['id'].'">'.$key['category'].'</option>';
+	}
+	echo '</select></div></div>';
+
+
 	}
 
 

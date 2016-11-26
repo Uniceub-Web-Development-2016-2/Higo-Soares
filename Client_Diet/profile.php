@@ -1,7 +1,6 @@
 <?php 
 session_start();
 include('functions.php');
-
 ?>
 
 <!DOCTYPE html>
@@ -92,7 +91,7 @@ include('functions.php');
 				<h1 class="page-header">Perfil</h1>
 			</div>
 		</div><!--/.row-->
-		<form action="requests.php" method="post" class="form-horizontal">
+		<form action="update_user.php" method="post" class="form-horizontal">
 		<?php
 		profile();
 		?>

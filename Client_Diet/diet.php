@@ -18,7 +18,15 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/datepicker3.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>$(document).ready(function() {
+      $("#novaCategoria").click(function() {
+      var novoItem = $("#div").clone().removeAttr('id'); // para não ter id duplicado
+      novoItem.children('input').val(''); //limpa o campo quantidade
+      $("#novaDieta").append(novoItem);
+    });
+  });
+  </script>
 <!--Icons-->
 <script src="js/lumino.glyphs.js"></script>
 
@@ -110,14 +118,14 @@
 							<div class="tab-pane fade" id="pilltab2">
 								<div class="col-md-8">
 
-								<form action="teste.php" class="form-horizontal">			
+								<form action="teste.php" method="post" id="novaDieta"class="form-horizontal">			
 							    <div class="form-group">
 							    <label class="col-sm-4 control-label">Data Inicial</label>
 							    <div class="col-sm-4">
 							    <input type="date" name="dat_init" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
 							    </div>
 							  	</div>
-							    <div class="form-group">
+							    <div id="div" class="form-group">
 							    <label for="inputEmail3" class="col-sm-4 control-label">Data Final</label>
 							    <div class="col-sm-4">
 							    <input type="date" name="dat_final" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
@@ -129,13 +137,12 @@
 							    <input type="text" name="ideal_weight" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
 							    </div>
 							  	</div>
-							  	<?php combo_objective(); ?>
-								</form>			
-							
+							  	<?php combo_objective(); 
+							  	combo_category();
+							  	?>						
 								<div class="form-group">
-								<form action="teste.php" method="post">
 								<?php
-								combo_foods();								
+								//combo_foods();								
 								?>
 								</div>
 								<button type="submit" class="btn btn-primary">Confirmar</button>

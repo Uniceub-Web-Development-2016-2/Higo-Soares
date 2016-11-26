@@ -53,7 +53,7 @@
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-4 control-label">Nome</label>
     <div class="col-sm-4">
-      <input type="text" name="user" required="required" maxlength="11" class="form-control form-control-login" id="inputEmail3" placeholder="user">
+      <input type="text" name="user" required="required" maxlength="20" class="form-control form-control-login" id="inputEmail3" placeholder="user">
     </div>
   </div>
   <div class="form-group">

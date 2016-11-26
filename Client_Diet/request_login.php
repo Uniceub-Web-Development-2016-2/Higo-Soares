@@ -13,6 +13,7 @@ $response = \Httpful\Request::post($post_login)
 ->body(json_encode($_POST))
 ->send();
 
+
 $array = json_decode($response->body, true);
 
 if(empty($array)){
@@ -22,6 +23,7 @@ if(empty($array)){
 	    		</script>';
 }
 else{
+$id="";
 foreach ($array as $value => $key){
 	$id = $key['id'];
 }

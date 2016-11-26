@@ -124,40 +124,35 @@
 							<div class="tab-pane fade" id="pilltab2">
 								<div class="col-md-8">
 
-								<form action="teste.php" method="post" id="novaDieta" class="form-horizontal">			
+								<form action="request_diet.php" method="post" id="novaDieta" class="form-horizontal">			
 							  	<?php newDiet();
 							  	?>
+							  	</form>
 							  	<nav aria-label="...">
 								  <ul class="pager">
 								    <li class=""><a href="#">Previous</a></li>
 								    <li class="" onclick="Mudarestado('next1')"><a href="#next1">Next</a></li>
 								  </ul>
+								  </nav>
+								 
 
+								 <form action="request_diet1.php" method="post" id="novaDieta2" class="form-horizontal">
 								<div class="form-group" id="next1" style="display :none;">
 								<?php
 								newDiet2();
 								?>
-
+								</div>
 								<nav aria-label="...">
 								  <ul class="pager">
 								    <li class=""><a href="#">Previous</a></li>
 								    <li class="" onclick="Mudarestado('next2')"><a href="#next2">Next</a></li>
 								  </ul>
+								 </nav>
+								 
 
 								<div class="form-group" id="next" style="display :none;">
 								<p>certo</p>
-								</div> 	
-
-
-								</nav>
-
 								</div> 
-
-
-								</nav>
-
-							  	</form>
-
 							  	<div class="col-md-4"></div>						
 								<!-- <button type="submit" class="btn btn-primary">Confirmar</button>
 								<button type="reset" class="btn btn-default">Cancelar</button> -->

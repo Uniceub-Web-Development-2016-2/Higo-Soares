@@ -21,22 +21,6 @@
 <link href="css/styles.css" rel="stylesheet">
 
 
-<script type='text/javascript'>
-function fetch_select(val)
-{
- $.ajax({
- type: 'get',
- url: 'functions.php',
- data: {
-  get_option:val
- },
- success: function (response) {
-  document.getElementById("cod_food").innerHTML=response; 
- }
- });
-}
-
-
 
 </script>
 
@@ -221,27 +205,13 @@ function fetch_select(val)
 	</script>
 	<script type="text/javascript">
 
-	var questions2 = [{
-	     "text": "teste",
-	     "value": "1"
-	   }, {
-	     "text": "teste2",
-	     "value": "2"
-	   }, {
-	     "text": "teste3",
-	     "value": "3"
-	   }, {
-	     "text": "teste4",
-	     "value": "4"
-	   }
 
-	 ];
 
 	 function mudarSelecao() {
 
 	 	var id = $('#cod_category').val();
-	 	var url = 'http://localhost/Diet/food?cod_category=category.id&%27'+id+'%27=category.id'; 
-	 	
+	 	var url =  window.location.protocol+ '//'+ window.location.hostname +'/Diet/food?cod_category=category.id&%27'+id+'%27=category.id';
+
 	 	$.get( url, function( data ) {
 		    var jsonObj = $.parseJSON(data);
 

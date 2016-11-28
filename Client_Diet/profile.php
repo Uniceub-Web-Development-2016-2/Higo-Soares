@@ -51,7 +51,6 @@ include('functions.php');
 						<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="profile.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Perfil</a></li>
-							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Configurações</a></li>
 							<li><a href="exit.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg>Sair</a>
 							</li>
 						</ul>
@@ -72,8 +71,6 @@ include('functions.php');
 			<li class="home.php"><a href="home.php"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
 			<li><a href="diet.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Dieta</a></li>
 			<li><a href="products.php"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Produtos</a></li>
-			<li><a href="buy.php"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Onde comprar</a></li>
-			<li><a href="suport.php"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Suporte</a></li>
 		</ul>
 
 	</div><!--/.sidebar-->

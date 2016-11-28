@@ -2,24 +2,6 @@
 include('httpful.phar');
 
 
-	
-
-	function combo_objective(){
-	$get_request = 'http://localhost/Diet/objective';
-
-	$response = \Httpful\Request::get($get_request)->send();
-	
-	$array = json_decode($response->body, true);
-	
-	echo '<div class="form-group">
-	<label class="col-sm-4 control-label">Objetivo</label><div class="col-sm-6">
-	<select name="objective" class="form-control">';
-	foreach ($array as $value => $key) {
-	echo '<option value="'.$key['id'].'">'.$key['objective'].'</option>';
-	}
-	echo '</select></div></div>';
-	}
-	
 	function table_foods(){
 	$get_request = 'http://localhost/Diet/food/category?cod_category=category.id';
 
@@ -33,14 +15,13 @@ include('httpful.phar');
 	}
 	
 	function diet(){
-	$logado = $_SESSION['user'];
 	$id = $_SESSION['id'];
 	$get_request = 'http://localhost/Diet/user/diet?cod_user=user.id&cod_diet=diet.id&'.$id.'=user.id';
 
 	$response = \Httpful\Request::get($get_request)->send();
 
 	$array = json_decode($response->body, true);
-	//$query= "SELECT cod_user, cod_diet, weight, height, dat_init, dat_final, ideal_weight FROM `user_diet` join user join diet WHERE ";
+	
 	echo 
     '<div class="panel panel-default">';
     $cod_diet="";
@@ -56,7 +37,7 @@ include('httpful.phar');
 	
 	$array2 = json_decode($response2->body, true);
 
-	//$query = 'SELECT cod_diet, cod_food, schedule, objective, food, category, calories, amount FROM diet join objective join category join food join diet_food WHERE cod_diet=diet.id and cod_food=food.id and cod_objective=objective.id and cod_category=category.id and diet.id=1';
+	
 
 	echo'<table class="table"> 
 			<thead> 
@@ -72,7 +53,6 @@ include('httpful.phar');
 	}
 
 	function profile(){
-	$logado = $_SESSION['user'];
 	$id = $_SESSION['id'];
 	$get_request = 'http://localhost/Diet/user?id='.$id;
 
@@ -136,43 +116,51 @@ include('httpful.phar');
 	}
 	}
 
-	function combo_category(){
-	$url = 'http://localhost/Diet/category';
-
-	$response = \Httpful\Request::get($url)->send();
-
-	$array = json_decode($response->body, true);
-
-	echo '<div class="form-group">
-	<label class="col-sm-4 control-label">Categoria</label><div class="col-sm-6">
-	<select name="category" class="form-control">';
-	$id_category="";
-	foreach ($array as $value => $key) {
-		$id_category=$key['id'];
-	echo '<option id="novaCategoria" value="'.$key['id'].'">'.$key['category'].'</option>';
-	}
-	echo '</select></div></div>';
-
-
-	}
 
 	function combo_foods($id){
 	$url = 'http://localhost/Diet/food?cod_category=category.id&'.$id.'=category.id'; 
 
 	$response2 = \Httpful\Request::get($url)->send();
 	$array2 = json_decode($response2->body, true);
+	echo '<div class="form-group">
+	<label class="col-sm-4 control-label">Alimento</label><div class="col-sm-6">
+	<select name="cod_food" id="cod_food" class="form-control">
+	<option value="">Selecione o alimento</option>';
 	foreach ($array2 as $value2 => $key2) {
-	echo '<div id="foods" class="form-group"><label class="col-sm-4 control-label" >Alimento</label><div class="col-sm-6">
-	<input name="food" type="checkbox" value="'.$key2['id'].'">'.$key2['food'].' - '.$key2['calories'].'Kcal'.'
-	</div></div>';
-
-	amount($key2['id']);
-	
+	echo '<option value="'.$key2['id'].'">'.$key2['food'].' - '.$key2['calories'].'Kcal'.'</option>';
 	}
+
+	echo '</select></div></div>
+
+	<div class="form-group">
+	<label for="inputEmail3" class="col-sm-4 control-label">Quantidade(g)</label>
+	<div class="col-sm-3">
+	<input type="text" name="amount" maxlength="5" class="form-control form-control-login" placeholder="" >
+	</div>
+	</div>';
+
+
+	}
+
+
+	function combo_objective(){
+	$get_request = 'http://localhost/Diet/objective';
+
+	$response = \Httpful\Request::get($get_request)->send();
+	
+	$array = json_decode($response->body, true);
+	
+	echo '<div class="form-group">
+	<label class="col-sm-4 control-label">Objetivo</label><div class="col-sm-6">
+	<select name="cod_objective" class="form-control">';
+	foreach ($array as $value => $key) {
+	echo '<option value="'.$key['id'].'">'.$key['objective'].'</option>';
+	}
+	echo '</select></div></div>';
+	return $key['id'];
 	}
 
 	function newDiet2(){
-
 	$url = 'http://localhost/Diet/category';
 
 	$response = \Httpful\Request::get($url)->send();
@@ -181,76 +169,48 @@ include('httpful.phar');
 
 	echo '<div class="form-group">
 	<label class="col-sm-4 control-label">Categoria</label><div class="col-sm-6">
-	<select name="category" class="form-control">';
+	<select name="cod_category" id="cod_category" class="form-control" >
+	<option value="">Selecione a categoria</option>';
 	$id_category="";
 	foreach ($array as $value => $key) {
 		$id_category=$key['id'];
-	echo '<option id="novaCategoria" value="'.$key['id'].'">'.$key['category'].'</option>';
+	echo '<option value="'.$key['id'].'">'.$key['category'].'</option>';
 	}
 
 	echo '</select></div></div>';
 
 	combo_foods($id_category);
 
-
 	
+
 	}
 
-	function amount($id){
-	echo '<div class="form-group">
-	<label for="inputEmail3" class="col-sm-4 control-label">Quantidade</label>
-	<div class="col-sm-3">
-	<input type="text" name="amount" required="required" maxlength="5" class="form-control form-control-login" placeholder="" >
-	</div>
-	</div>
-	<div class="form-group">
-	<label for="inputEmail3" class="col-sm-4 control-label">Horário</label>
-	<div class="col-sm-3">
-	<input type="time" name="schedule" required="required" class="form-control form-control-login" placeholder="" >
-	</div>
-	</div>';
+	function home_diets(){
+	$url = 'http://localhost/Diet/diet';
 
-	$url = 'http://localhost/Diet/diet_food/create';
+	$response = \Httpful\Request::get($url)->send();
 
-	$response = \Httpful\Request::post($url)
-	->sendsJson()
-	->body(json_encode($_POST))
-	->send();
-	
+	$array = json_decode($response->body, true);
+	$qtd = count($array);
+
+	echo $qtd;		
+
+
 	}
 
-	function newDiet(){
-		echo '<div class="form-group">
-	<label class="col-sm-4 control-label">Data Inicial</label>
-	<div class="col-sm-4">
-	<input type="date" name="dat_init" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
-	</div>
-	 </div>
-	<div class="form-group">
-	<label for="inputEmail3" class="col-sm-4 control-label">Data Final</label>
-	 <div class="col-sm-4">
-	<input type="date" name="dat_final" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
-		</div>
-	</div>
-	<div class="form-group">
-	<label for="inputEmail3" class="col-sm-4 control-label">Peso Ideal</label>
-	<div class="col-sm-3">
-	<input type="text" name="ideal_weight" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
-			    </div>
-	</div>';
+	function home_products(){
+	$url = 'http://localhost/Diet/food';
+
+	$response = \Httpful\Request::get($url)->send();
+
+	$array = json_decode($response->body, true);
+	$qtd = count($array);
+
+	echo $qtd;		
 
 
-	$url = 'http://localhost/Diet/diet/create';
+	}
 
-	$response = \Httpful\Request::post($url)
-	->sendsJson()
-	->body(json_encode($_POST))
-	->send();
-
-	combo_objective();
-
-
-}
 
 
 

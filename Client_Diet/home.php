@@ -1,5 +1,6 @@
 <?php 
 session_start();
+include('functions.php');
 if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['password']) == true))
 {
 	unset($_SESSION['user']);
@@ -55,7 +56,6 @@ if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['password']) == t
 						<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="profile.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Perfil</a></li>
-							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Configurações</a></li>
 							<li><a href="exit.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg>Sair</a>
 							</li>
 						</ul>
@@ -76,8 +76,7 @@ if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['password']) == t
 			<li class="active"><a href="home.php"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
 			<li><a href="diet.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Dieta</a></li>
 			<li><a href="products.php"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Produtos</a></li>
-			<li><a href="buy.php"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Onde comprar</a></li>
-			<li><a href="suport.php"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Suporte</a></li>
+
 		</ul>
 
 	</div><!--/.sidebar-->
@@ -104,21 +103,8 @@ if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['password']) == t
 							<svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">120</div>
-							<div class="text-muted">Products</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-12 col-md-6 col-lg-3">
-				<div class="panel panel-orange panel-widget">
-					<div class="row no-padding">
-						<div class="col-sm-3 col-lg-5 widget-left">
-							<svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
-						</div>
-						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">52</div>
-							<div class="text-muted">Messages</div>
+							<div class="large"><?php home_products(); ?></div>
+							<div class="text-muted">Todos produtos</div>
 						</div>
 					</div>
 				</div>
@@ -130,26 +116,14 @@ if((!isset ($_SESSION['user']) == true) and (!isset ($_SESSION['password']) == t
 							<svg class="glyph stroked app-window-with-content"><use xlink:href="#stroked-app-window-with-content"></use></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">25.2k</div>
-							<div class="text-muted">Diets</div>
+							<div class="large"><?php home_diets(); ?></div>
+							<div class="text-muted">Todas dietas</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div><!--/.row-->
 		
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">Site Traffic Overview</div>
-					<div class="panel-body">
-						<div class="canvas-wrapper">
-							<canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/.row-->
 	</div>	<!--/.main-->
 
 	<script src="js/jquery-1.11.1.min.js"></script>

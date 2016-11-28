@@ -3,6 +3,7 @@
 	$logado = $_SESSION['user'];
 	include('functions.php');
 	
+	
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,21 +19,28 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/datepicker3.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>$(document).ready(function() {
-      $("#novaCategoria").click(function() {
-      var novoItem = $("#foods").clone().removeAttr('id'); // para não ter id duplicado
-      novoItem.children('input').val(''); //limpa o campo quantidade
-      $("#novaDieta").append(novoItem);
-    });
-  });
-  </script>
-<script>function Mudarestado(el) {
-    var display = document.getElementById(el).style.display;
-    if(display == "none")
-        document.getElementById(el).style.display = 'block';
 
-}</script>
+
+<script type='text/javascript'>
+function fetch_select(val)
+{
+ $.ajax({
+ type: 'get',
+ url: 'functions.php',
+ data: {
+  get_option:val
+ },
+ success: function (response) {
+  document.getElementById("cod_food").innerHTML=response; 
+ }
+ });
+}
+
+
+
+</script>
+
+
 <!--Icons-->
 <script src="js/lumino.glyphs.js"></script>
 
@@ -63,7 +71,6 @@
 						<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="profile.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Perfil</a></li>
-							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Configurações</a></li>
 							<li><a href="exit.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Sair</a></li>
 						</ul>
 					</li>
@@ -83,8 +90,6 @@
 			<li ><a href="home.php"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
 			<li class="active"><a href="diet.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Dieta</a></li>
 			<li><a href="products.php"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Produtos</a></li>
-			<li><a href="buy.php"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Onde comprar</a></li>
-			<li><a href="suport.php"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Suporte</a></li>
 		</ul>
 
 	</div><!--/.sidebar-->
@@ -112,7 +117,7 @@
 						<ul class="nav nav-pills">
 							<li class="active"><a href="#pilltab1" data-toggle="tab">Dieta</a></li>
 							<li class=""><a href="#pilltab2" data-toggle="tab">Nova Dieta</a></li>
-							<li class=""><a href="#pilltab3" data-toggle="tab">Editar Dieta</a></li>
+							
 						</ul>
 						
 						<div class="tab-content">
@@ -124,44 +129,62 @@
 							<div class="tab-pane fade" id="pilltab2">
 								<div class="col-md-8">
 
-								<form action="request_diet.php" method="post" id="novaDieta" class="form-horizontal">			
-							  	<?php newDiet();
-							  	?>
-							  	</form>
-							  	<nav aria-label="...">
-								  <ul class="pager">
-								    <li class=""><a href="#">Previous</a></li>
-								    <li class="" onclick="Mudarestado('next1')"><a href="#next1">Next</a></li>
-								  </ul>
-								  </nav>
-								 
+								<div class="form-group" id="diet1">
+								<form id="newDiet" action="new_diet.php" method="post"  class="form-horizontal">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">Data Inicial</label>
+										<div class="col-sm-6">
+										<input type="date" name="dat_init" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
+										</div>
+										 </div>
+										<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label">Data Final</label>
+										 <div class="col-sm-6">
+										<input type="date" name="dat_final" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
+											</div>
+										</div>
+										<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label">Peso Ideal</label>
+										<div class="col-sm-3">
+										<input type="text" name="ideal_weight" required="required" maxlength="11" class="form-control form-control-login" placeholder="" >
+										</div>
+										</div>
+										<?php
+										combo_objective();
+										?>								
+								    <div class="form-group">
+							 	  <div class="col-sm-offset-2 col-sm-8">
+							        <button type="submit" class="btn btn-default">Next</button>
+							      </div>
+							    </div>
+								 </form>
+								 </div>
 
-								 <form action="request_diet1.php" method="post" id="novaDieta2" class="form-horizontal">
-								<div class="form-group" id="next1" style="display :none;">
+								 <div class="form-group" id="next1" style="display :none;">	
+								 <form action="request_diet1.php" method="post" class="form-horizontal">
+								 <div class="form-group" id="newSchedule">
+								<label for="inputEmail3" class="col-sm-4 control-label">Horário</label>
+								<div class="col-sm-5">
+								<input type="time" name="schedule" required="required" class="form-control form-control-login" placeholder="" >
+								</div>
+								</div>								
 								<?php
 								newDiet2();
 								?>
-								</div>
-								<nav aria-label="...">
-								  <ul class="pager">
-								    <li class=""><a href="#">Previous</a></li>
-								    <li class="" onclick="Mudarestado('next2')"><a href="#next2">Next</a></li>
-								  </ul>
-								 </nav>
-								 
+								<div class="col-sm-4"> </div>
 
-								<div class="form-group" id="next" style="display :none;">
-								<p>certo</p>
-								</div> 
-							  	<div class="col-md-4"></div>						
-								<!-- <button type="submit" class="btn btn-primary">Confirmar</button>
-								<button type="reset" class="btn btn-default">Cancelar</button> -->
+
+								<div class="form-group">
+							 	<div class="col-sm-offset-2 col-sm-8">
+							    <button type="submit" class="btn btn-default">Criar</button>
+							    </div>
+								</div>
+								</form>
+								</div>				
+
 							</div>
 							</div>
-							<div class="tab-pane fade" id="pilltab3">
-								<h4>Tab 3</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget rutrum purus. Donec hendrerit ante ac metus sagittis elementum. Mauris feugiat nisl sit amet neque luctus, a tincidunt odio auctor. </p>
-							</div>
+	
 						</div>
 					</div>
 	</div>
@@ -195,7 +218,73 @@
 		$(window).on('resize', function () {
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
+	</script>
+	<script type="text/javascript">
+
+	var questions2 = [{
+	     "text": "teste",
+	     "value": "1"
+	   }, {
+	     "text": "teste2",
+	     "value": "2"
+	   }, {
+	     "text": "teste3",
+	     "value": "3"
+	   }, {
+	     "text": "teste4",
+	     "value": "4"
+	   }
+
+	 ];
+
+	 function mudarSelecao() {
+
+	 	var id = $('#cod_category').val();
+	 	var url = 'http://localhost/Diet/food?cod_category=category.id&%27'+id+'%27=category.id'; 
+	 	
+	 	$.get( url, function( data ) {
+		    var jsonObj = $.parseJSON(data);
+
+		    var selectbox = $('#cod_food');
+			selectbox.empty();
+			for (var i = 0, l = jsonObj.length; i < l; i++) {
+				var item = jsonObj[i];
+				selectbox.append($('<option>', {
+				 value: item.id,
+				 text: item.food
+				}));
+			}
+		});	     
+	 };
+
+	$(document).ready(function(){
+		$('#newDiet').submit(function(){
+			var dados = jQuery( this ).serialize();
+
+			jQuery.ajax({
+				type: "POST",
+				url: "new_diet.php",
+				data: dados,
+				success: function( data )
+				{
+					alert( data );
+					jQuery('#next1').css('display','block');
+					jQuery('#diet1').css('display','none');
+
+
+				}
+			});
+			
+			return false;
+		});
+
+	});
+
+	$('#cod_category').change(function() {
+		mudarSelecao();
+   })
 	</script>	
+	
 </body>
 
 </html>
